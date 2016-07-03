@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-us" >
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>首页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+
+  <style>
+    .loading-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 1000;
+      visibility: hidden;
+      transition: opacity 0.15s, visibility 0s 0.15s;
+    }
+    .loading-overlay.show {
+      visibility: visible;
+    }
+    .loading-overlay.show::after,
+    .loading-overlay.show::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin: -10px 0 0 -10px;
+      border-radius: 50%;
+      -webkit-transition: opacity 0.15s, visibility 0s 0.15s;
+      transition: opacity 0.15s, visibility 0s 0.15s;
+    }
+
+    .loading-overlay.show::after {
+      background: #6cc88a;
+      -webkit-transform: translateX(-20px);
+      transform: translateX(-20px);
+      -webkit-animation: moveRight 0.6s linear infinite alternate;
+      animation: moveRight 0.6s linear infinite alternate;
+    }
+
+    .loading-overlay.show::before {
+      background: #4fc3f7;
+      -webkit-transform: translateX(20px);
+      transform: translateX(20px);
+      -webkit-animation: moveLeft 0.6s linear infinite alternate;
+      animation: moveLeft 0.6s linear infinite alternate;
+    }
+
+    @-webkit-keyframes moveRight {
+      to { -webkit-transform: translateX(20px); }
+    }
+
+    @keyframes moveRight {
+      to { transform: translateX(20px); }
+    }
+
+    @-webkit-keyframes moveLeft {
+      to { -webkit-transform: translateX(-20px); }
+    }
+
+    @keyframes moveLeft {
+      to { transform: translateX(-20px); }
+    }
+  </style>
+
+</head>
+<body>
+
+  <div id="app"></div>
+  <div class="loading-overlay show"></div>
+
+  <script src="bundle.lib.js"></script>
+  <script src="bundle.app.js"></script>
+
+</body>
+</html>

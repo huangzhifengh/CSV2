@@ -1,0 +1,35 @@
+@import '../variables.css';
+
+.custom-select-wrapper {
+  position: relative;
+
+  .custom-select-option-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #CCC;
+    z-index: 1;
+    background: #fff;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    max-height: 200px;
+    min-height: 50px;
+    overflow-y: scroll;
+    display: none;
+
+    a {
+      padding: 5px;
+    }
+  }
+
+  input {
+    cursor: pointer;
+  }
+
+  &.has-feedback .form-control-feedback {
+    right: 0;
+    z-index: 0;
+  }
+}

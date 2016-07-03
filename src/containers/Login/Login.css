@@ -1,0 +1,35 @@
+@import 'variable.css';
+
+.LoginPage {
+  
+  background: linear-gradient(#eee,#4a3333);
+  position: absolute;
+  display: table;
+  width: 100%;
+  height: 100%;
+
+  .LoginPage-container {
+    display: table-cell;
+    vertical-align: middle;
+
+    .title {
+      margin-bottom: 20px;
+    }
+
+    .sth {
+      margin: 0 auto;
+      width: 400px;
+      padding: 20px;
+    }
+  }
+
+  .alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    display: none;
+  }
+}
+

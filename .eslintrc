@@ -1,0 +1,13 @@
+{
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "no-underscore-dangle": false
+  }
+}

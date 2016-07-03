@@ -1,0 +1,56 @@
+@import 'variable.css';
+
+ul.tree-ui .glyphicon,
+ul.tree-ui .tree-node-ckb {
+  margin-right: 5px;
+}
+ul.tree-ui > li {
+  display: block;
+  margin: 0;
+  padding: 0; 
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+ul.tree-ui  .sub-tree > li {
+  background: #fff;
+}
+ul.tree-ui .tree-indent {
+  display: inline-block;
+
+  width: 15px;
+  height: 1px;
+}
+ul.tree-ui  li  a {
+  color: #222;
+  display: block;
+  padding: 10px 15px;
+}
+ul.tree-ui  li.active > a,
+ul.tree-ui li a:hover{
+  /*background: #bbbbbb;
+  color: #fff;*/
+}
+ul.tree-ui > li > a > span {
+  margin-left: 10px;
+}
+ul.sub-tree > li > a > span {
+  margin-left: 10px;
+}
+ul.tree-ui.tree > li > a {
+  border-bottom: 0;
+}
+ul.tree-ui ul.sub-tree {
+  display: none;
+}
+ul.tree-ui .sub-tree li  a {
+  padding: 5px 10px;
+}
+ul.tree-ui li > a .icon {
+  transition: all .3s;
+}
+ul.tree-ui li.open > a .icon {
+  transform: rotate(90deg);
+}
+ul.tree-ui li {
+  background: #F5F5F5;
+}

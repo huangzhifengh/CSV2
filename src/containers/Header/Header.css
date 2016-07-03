@@ -1,0 +1,50 @@
+@import 'variable.css';
+
+:root {
+  --brand-color: #61dafb;
+}
+
+.Header {
+  background: linear-gradient(#eee,#c7c7c7);
+  color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.Header-container {
+  margin: 0 auto;
+  padding: 6px;
+}
+
+.Header-brand {
+  color: color(var(--brand-color) lightness(+10%));
+  text-decoration: none;
+  font-size: 1.5em; /* ~28px */
+}
+
+.Header-brandTxt {
+  color: #333333;
+  margin-left: 10px;
+}
+
+.Header-nav {
+  float: right;
+  margin-top: 6px;
+}
+
+.Header-banner {
+  text-align: center;
+}
+
+.Header-bannerTitle {
+  margin: 0;
+  padding: 10px;
+  font-weight: normal;
+  font-size: 4em;
+  line-height: 1em;
+}
+

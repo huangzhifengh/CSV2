@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import DataTableBase from '../DataTableBase'
-import TableRow from './TableRow'
+import Base from './Base'
+import Row from './Row'
 import withStyles from 'with-style'
-import styles from './DataTable.css'
+import styles from './Table.css'
 
 @withStyles(styles)
-class DataTable extends DataTableBase {
+class DataTable extends Base {
 
   _getTableBody (columns, command) {
     let data = this.state.data
 
     return (<tbody>
     {!!data.length && data.map((item, index) => {
-      return <TableRow columns={columns} command={command} data={item} key={index} onClick={this._onTableRowClick.bind(this)} />
+      return <Row columns={columns} command={command} data={item} key={index} onClick={this._onRowClick.bind(this)} />
     })}
     {!data.length && <tr className="data-table-empty-row"></tr>}
     </tbody>)

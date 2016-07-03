@@ -1,6 +1,6 @@
 import React from 'react'
 import Page from 'base-page'
-import Tabel from 'components/DataTable'
+import Tabel from 'components/Table'
 
 class Job extends Page {
 

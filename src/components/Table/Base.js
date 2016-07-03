@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import DataModal from '../DataModal'
-import Pagination from './Pagination'
-import DataTableStore from '../../stores/DataTableStore'
-import DataTableActions from '../../actions/DataTableActions'
+import Modal from './Modal'
+import Pagination from '../Pagination'
+
+const DataTableStore = () => {}
+const DataTableActions =  () => {}
 
 class DataTableBase extends Component {
 
@@ -136,11 +137,11 @@ class DataTableBase extends Component {
   }
 
   _createModel (props) {
-    let dDataModalContainer = document.getElementById('__dataModalContainer')
+    let dModalContainer = document.getElementById('__dataModalContainer')
 
-    ReactDOM.unmountComponentAtNode(dDataModalContainer)
+    ReactDOM.unmountComponentAtNode(dModalContainer)
 
-    ReactDOM.render(<DataModal {...props} />, dDataModalContainer) 
+    ReactDOM.render(<Modal {...props} />, dModalContainer) 
 
     this.$$modal = document.getElementById('__dataModal')
     $(this.$$modal).modal()
@@ -236,3 +237,4 @@ class DataTableBase extends Component {
 }
 
 export default DataTableBase
+

@@ -1,4 +1,4 @@
-@import '../variables.css';
+@import 'variable.css';
 
 .custom-select-wrapper {
   position: relative;

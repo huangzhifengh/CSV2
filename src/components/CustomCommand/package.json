@@ -1,0 +1,4 @@
+{
+  "name": "CustomCommand",
+  "main": "./CustomCommand.js"
+}

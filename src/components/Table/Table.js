@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import Base from './Base'
 import Row from './Row'
 import withStyles from 'with-style'
@@ -8,19 +7,26 @@ import styles from './Table.css'
 @withStyles(styles)
 class DataTable extends Base {
 
-  _getTableBody (columns, command) {
+  getTableBody (columns, command, checkable) {
     let data = this.state.data
 
     return (<tbody>
     {!!data.length && data.map((item, index) => {
-      return <Row columns={columns} command={command} data={item} key={index} onClick={this._onRowClick.bind(this)} />
+      return <Row 
+        key={index} 
+        columns={columns} 
+        command={command} 
+        checkable={checkable} 
+        data={item} 
+        onCommandClick={this.onCommandClick.bind(this)} 
+      />
     })}
-    {!data.length && <tr className="data-table-empty-row"></tr>}
+    {!data.length && <tr className="data-table-empty-row">暂无数据</tr>}
     </tbody>)
   }
 
   render() {
-    return this._getTable()
+    return this.getTable()
   }
 
 }

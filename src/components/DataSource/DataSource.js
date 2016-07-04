@@ -3,27 +3,20 @@ const noop = () => {}
 class DataSource {
   
   constructor (options) {
+    options = options = {}
     this.transport = options.transport || {}
     this.events = options.events || {}
     
-    this.defaultData = {}
-
-    this.eventsMap = {
-      read: {
-        did: 'onFetched',
-      },
-      save: {
-        did: 'onFormDidSubmit',
-      },
-    }
+    this._data = options.data
+    this.requestData = options.requestData
   }
   
-  setDefaultData (data) {
-    this.defaultData = data
+  setRequestData (data) {
+    this.requestData = data
   }
 
   parse (data) {
-    return this.transport.parse ? this.transport.parse(data) : (data.root ? data.root : data )
+    return this.transport.parse ? this.transport.parse(data) : data
   }
 
   format (data, type) {
@@ -31,74 +24,73 @@ class DataSource {
   }
 
   getAjaxOption (type, data) {
-    let option = null
-    if (this.transport) {
-      let method = this.transport[type]
-      if (method) {
-        option = 'string' === typeof method ? ({url: method}) : method()
-        option.data = _.extend({}, this.defaultData, option.data, data)
-      }
+    let method = this.transport[type]
+    if (method) {
+      let option = 'string' === typeof method ? ({url: method}) : method()
+      option.data = _.extend({}, this.requestData, option.data, data)
+      return option
     }
-
-    return option
-  }
-
-  getEventNameByPath (path) {
-    let target =  _.extend({}, this.eventsMap)
-    while (path.length) {
-      let name = path.shift()
-      target = target[name]
-    }
-    return target
+    return null
   }
 
   getEventName (path) {
     let paths = path.split('.')
-    let name = 1 === paths.length ? paths[0] : this.getEventNameByPath(paths)
+    let name = ['on', 'data', paths[0], paths[1]].join('-').replace(/-(\w)/g, (a, b) => b.toUpperCase())
     return this.events[name] || noop
   }
 
   request (type, data, callback) {
+    let option = this.getAjaxOption(type, data)
+    if (option) {
+      let did_hook = this.getEventName(`did.${type}`)
+      ajax(option, resp => {
+        callback && callback(resp)
+        did_hook(resp)
+        callback && callback(this.parse(resp))
+      }, err => {
+        did_hook(false, err)
+        callback && callback(false, err)
+      })
+    }
+  }
+
+  prepare (type, data, callback) {
     if ('function' === typeof data) {
       callback = data
       data = {}
     }
 
-    let option = this.getAjaxOption(type, data)
-    let hook = this.getEventName(`${type}.did`)
-
-    option && ajax(option, resp => {
-      callback && callback(resp)
-      hook(resp)
-      callback && callback(this.parse(resp))
-    }, err => {
-      hook(false, err)
-      callback && callback(false, err)
-    })
+    data = this.format(data, type)
+    let will_hook = this.getEventName(`will.${type}`)
+    if (2 === will_hook.length) {
+      will_hook(data, () => {
+        this.request(type, data, callback)
+      })
+    } else {
+      if (false !== will_hook(data)) {
+        this.request(type, data, callback)
+      }
+    }
   }
 
   read (data, callback) {
-    this.request('read', data, callback)
+    this.prepare('read', data, callback)
   }
 
   save (data, callback) {
-    if ('function' === typeof data) {
-      callback = data
-      data = {}
-    }
-    
-    data = this.format(data, 'save')
-    let beforeSubmit = this.getEventName('onFormWillSubmit')
+    this.prepare('save', data, callback)
+  }
 
-    if (2 === beforeSubmit.length) {
-      beforeSubmit(data, () => {
-        this.request('save', data, callback)
-      })
-    } else {
-      if (false !== beforeSubmit(data)) {
-        this.request('save', data, callback)
-      }
-    }
+  create (data, callback) {
+    this.prepare('create', data, callback)
+  }
+
+  update (data, callback) {
+    this.prepare('update', data, callback)
+  }
+
+  destroy (id, callback) {
+    this.prepare('destroy', { id }, callback)
   }
 
 }

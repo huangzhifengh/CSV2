@@ -11,9 +11,9 @@ class CustomCommand extends Component {
 
   render() {
     let props = {
-      config: this.props.config,
       onClick: this._onClick.bind(this),
-      value: this.props.value
+      value: this.props.value,
+      ...this.props.config,
     }
 
     switch (this.props.config.type) {
@@ -29,7 +29,7 @@ class CustomCommand extends Component {
   }
 
   _onClick (e) {
-    this.props.onClick(e, this.props.config.name)
+    this.props.onClick(this.props.config, e)
   }
 
 }

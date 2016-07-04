@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ajax from '../../ajax'
 
 class FormElement extends Component {
 

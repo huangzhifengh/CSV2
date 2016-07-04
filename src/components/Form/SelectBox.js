@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
-import ajax from '../../ajax'
-import styles from './SelectBox.css';
-import withStyles from 'with-style';
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import styles from './SelectBox.css'
+import withStyles from 'with-style'
 import TreeLikeUI from '../TreeLikeUI'
 
 @withStyles(styles)

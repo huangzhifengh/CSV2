@@ -1,37 +1,44 @@
 import React, { Component, PropTypes } from 'react';
-import FormElement from '../Form/FormElement'
+import FormElement from './FormElement'
+import DataSource from '../DataSource'
 
 class Form extends Component {
 
-  constructor (props) {
-    super(props)
-
-    this.configMap = this._createConfigMap(this.props.columns)
-
-    this.isValid = true
-  }
-
   static propTypes = {
-    columns: React.PropTypes.array.isRequired,
+    fields: React.PropTypes.array.isRequired,
     data: React.PropTypes.object,
     type: React.PropTypes.string,
     onChange: React.PropTypes.func
   }
 
+  constructor (props) {
+    super(props)
+
+    this.configMap = this._createConfigMap(this.props.fields)
+    this.dataSource = new DataSource()
+
+    this.isValid = true
+  }
+
   render() {
 
-    let columns = $.extend(true, [], this.props.columns)
-    columns.slice(-1)[0].command && columns.pop()
-    let data = this.props.data
+    let fields = $.extend(true, [], this.props.fields)
+    fields.slice(-1)[0].command && fields.pop()
+    let data = this.props.data || {}
 
     return (
       <form className="form-horizontal" onChange={this._onChange.bind(this)} data-id={data.id}>
-        {columns.map(config => {
+        {fields.map(config => {
           return <FormElement type={this.props.type} config={config} value={data[config.name]} key={Math.random()} />
         })}
       </form>
     )
+  }
 
+  componentDidMount () {
+    this.dataSource.read(data => {
+      data && this.setState({data})
+    })
   }
 
   _verify (e) {

@@ -7,7 +7,6 @@ export default (config, WATCH, DEBUG, VERBOSE) => {
   return _.merge({}, config, {
     entry: {
       app: [
-        'font-awesome-webpack',
         ...(WATCH ? ['webpack-hot-middleware/client'] : []),
         './src/index'
       ],

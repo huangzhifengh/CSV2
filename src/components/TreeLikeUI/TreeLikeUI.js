@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import styles from './TreeLikeUI.css';
-import withStyles from 'with-style'
+import withStyles from '../../decorators/withStyles';
 import TreeNode from './TreeNode'
+import ajax from '../../ajax'
 
 @withStyles(styles)
 class TreeLikeUI extends Component {

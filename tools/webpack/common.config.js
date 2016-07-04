@@ -60,7 +60,7 @@ export default (DEBUG, VERBOSE) => {
       extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx'],
       alias: {
         'base-page': path.join(__dirname, '../../src/containers/Page/Page.js'),
-        'with-style': path.join(__dirname, '../../src/decorators/WithStyles.js')
+        'with-style': path.join(__dirname, '../../src/decorators/withStyles.js')
       },
       root: [path.join(__dirname, '../../src')]
     },

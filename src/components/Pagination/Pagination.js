@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 class Pagination extends Component {
   
   static propTypes = {
-    total: React.PropTypes.number.isRequired,
-    size: React.PropTypes.number.isRequired,
+    total: React.PropTypes.number,
+    size: React.PropTypes.number,
     onPaginationClick: React.PropTypes.func
   }
 
@@ -18,6 +18,8 @@ class Pagination extends Component {
   }
 
   render() {
+    
+    if (!this.props.size) return <span />
 
     let currentPage = this.props.page
     let page = Math.ceil(this.props.total / this.props.size)

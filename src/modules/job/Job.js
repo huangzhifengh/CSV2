@@ -33,6 +33,10 @@ class Job extends Page {
           detail: '',
         },
       },
+      detailInit: () => {
+        return () => <div className="haha">sub row data</div>
+      },
+      checkable: true,
     }
 
     return this.props.children || <Table {...config} />

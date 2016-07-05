@@ -1,49 +1,54 @@
-import React, { Component } from 'react'
-import CustomCommand from '../CustomCommand'
+import React, { Component, PropTypes } from 'react'
+import Command from '../CustomCommand'
+import Cell from './Cell'
 
 class TableRow extends Component {
   
   static propTypes = {
-    data: React.PropTypes.object.isRequired,
-    columns: React.PropTypes.array.isRequired,
-    command: React.PropTypes.array.isRequired
+    data: PropTypes.object.isRequired,
+    columns: PropTypes.array.isRequired,
+    command: PropTypes.array,
+    hasDetail: PropTypes.bool,
+    checkable: PropTypes.bool,
+    onClick: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    data: [],
+    data: {},
     columns: [],
-    command: []
+    command: [],
+    hasDetail: false,
+    checkable: false,
+    onClick: () => {},
   }
 
   render() {
-    let { data, columns, command } = this.props
-
-    if (!data) {
-      return <tr><td colSpan={columns.length+1}>暂无数据</td></tr>
-    }
+    let { data, columns, command, hasDetail, checkable, onClick, ...other } = this.props
     
-    return <tr>
+    return <tr {...other} >
+      {hasDetail && <Cell onClick={::this.toggleSubRow}><span className="icon glyphicon glyphicon-triangle-right" /></Cell> }
+      {checkable && <Cell><input type="checkbox" /></Cell>}
       {columns.map((config, index) => {
-        return !config.columnHidden && <td key={index}>{config.parse ? config.parse(data[config.name], data) : data[config.name]}</td>
+        return !config.columnHidden && 
+          <Cell key={index}>{config.parse ? config.parse(data[config.name], data) : data[config.name]}</Cell>
       })}
-      {!!command.length && <td>
+      {!!command.length && <Cell>
         {command.map((item, index) => {
           let props = {
             key: index,
-            onClick: this._onClick.bind(this),
-            config: item,
-            value: data[item.valueField]
+            ...item,
+            onClick: onClick.bind(this, item, data),
+            data: data,
           }
-          return <CustomCommand {...props} />
+          return <Command {...props} />
         })}
-      </td>}
+      </Cell>}
     </tr>
   }
 
-  _onClick (command, e) {
-    this.props.onCommandClick(command, this.props.data, e)
+  toggleSubRow () {
+    console.log('toggle sub row')
   }
-
 }
 
 export default TableRow

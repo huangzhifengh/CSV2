@@ -26,11 +26,11 @@ class Form extends Component {
   render() {
     _.extend(this.formData, this.state.remoteData)
 
-    this.elements = [] // reset
     let { fields, type } = this.props
     fields = $.extend(true, [], fields)
     fields.slice(-1)[0].command && fields.pop()
 
+    this.elements = [] // reset
     return <form className="form-horizontal">
       {fields.map((config, index) => {
         return <Element 
@@ -46,8 +46,8 @@ class Form extends Component {
   }
 
   componentDidMount () {
-    this.dataSource.readDefault(remoteData => {
-      data && this.setState({remoteData})
+    this.dataSource.readDefault(resp => {
+      resp && this.setState({remoteData: resp.data ? resp.data: resp})
     })
   }
 
@@ -65,7 +65,8 @@ class Form extends Component {
     let length = this.elements.length
     let isValid = true
     for (let i = 0; i < length; i++) {
-      isValid = this.elements[i].validate() && isValid
+      let el = this.elements[i]
+      isValid = (el ? el.validate() : true) && isValid
     }
     if (isValid) {
       this.save(type, _.extend({}, this.formData))

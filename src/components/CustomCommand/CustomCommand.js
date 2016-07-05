@@ -5,18 +5,19 @@ import HeartButton from './HeartButton'
 class CustomCommand extends Component {
   
   static propTypes = {
-    config: React.PropTypes.object.isRequired,
     onClick: React.PropTypes.func
   }
 
   render() {
+
+    let { onClick, type, text } = this.props
+
     let props = {
-      onClick: this._onClick.bind(this),
-      value: this.props.value,
-      ...this.props.config,
+      onClick: onClick,
+      ...this.props,
     }
 
-    switch (this.props.config.type) {
+    switch (type) {
       case 'switch':
         return <SwitchButton {...props} />
         break
@@ -24,12 +25,8 @@ class CustomCommand extends Component {
         return <HeartButton {...props} />
         break
       default:
-        return <a className="btn btn-link btn-xs" onClick={this._onClick.bind(this)}>{this.props.config.text}</a> 
+        return <a className="btn btn-link btn-xs" onClick={onClick}>{text}</a> 
     }
-  }
-
-  _onClick (e) {
-    this.props.onClick(this.props.config, e)
   }
 
 }

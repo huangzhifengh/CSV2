@@ -1,15 +1,17 @@
 class DataSource {
   
   constructor (options) {
-    options = _.extend({}, options)
-    this.transport = options.transport || {}
-    this.events = options.events || {}
-    this._data = options.data
-    this.requestData = options.requestData
+    _.extend(this, {}, {
+      transport: {},
+      events: {},
+      idField: 'id',
+    }, options)
+
+    this.activeData = null
   }
   
-  setRequestData (data) {
-    this.requestData = data
+  setFilter (filter) {
+    this.filter = filter
   }
 
   parse (data) {
@@ -23,8 +25,8 @@ class DataSource {
   getAjaxOption (type, data) {
     let method = this.transport[type]
     if (method) {
-      let option = 'string' === typeof method ? ({url: method}) : method()
-      option.data = _.extend({}, this.requestData, option.data, data)
+      let option = 'string' === typeof method ? ({url: method}) : method(this.activeData)
+      option.data = _.extend({}, this.filter, option.data, data)
       return option
     }
     return null
@@ -69,7 +71,12 @@ class DataSource {
   }
 
   read (data, callback) {
-    this.prepare('read', data, callback)
+    this.prepare('read', data, resp => {
+      let data = resp
+      if (resp.data) data = resp.data
+      this.data = data
+      callback && callback(resp)
+    })
   }
 
   readDefault (data, callback) {
@@ -94,6 +101,10 @@ class DataSource {
 
   destroy (id, callback) {
     this.prepare('destroy', { id }, callback)
+  }
+
+  setActiveData (data) {
+    this.activeData = data
   }
 
 }

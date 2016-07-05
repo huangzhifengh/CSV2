@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import DataTableBase from '../DataTableBase'
+import DataTableBase from '../Base'
 import TableBody from './TableBody'
-import style from './TreeTable.css'
+import styles from './HierarchyTable.css'
 import withStyles from 'with-style';
 
-@withStyles(style)
+@withStyles(styles)
 class TreeTable extends DataTableBase {
 
   _getTableBody (columns, command, data) {
-    return <TableBody columns={columns} command={command} data={this.state.data} onTableRowClick={this._onTableRowClick.bind(this)} />
+    return <TableBody columns={columns} command={command} data={this.state.data} onTableRowClick={::this.onCommandClick} />
   }
 
   render() {

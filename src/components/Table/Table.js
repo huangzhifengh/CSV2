@@ -18,7 +18,7 @@ class DataTable extends Base {
         command={command} 
         checkable={checkable} 
         data={item} 
-        onCommandClick={this.onCommandClick.bind(this)} 
+        onCommandClick={::this.onCommandClick} 
       />
     })}
     {!data.length && <tr className="data-table-empty-row">暂无数据</tr>}

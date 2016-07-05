@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import FormElement from '../Form/FormElement'
 import CustomCommand from '../CustomCommand'
 
 class TableRow extends Component {

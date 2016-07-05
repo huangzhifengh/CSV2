@@ -8,7 +8,11 @@ class Job extends Page {
     let config = {
       columns: [{
         title: '姓名', 
-        name: 'name'
+        name: 'name',
+        validation: (value, data) => {
+          return value === 'joezhou'
+        },
+        tip: 'tip'
       }, {
         title: '操作',
         command: [{
@@ -22,8 +26,12 @@ class Job extends Page {
       }],
       dataSource: {
         data: [{
-          name: 'joe'
-        }]
+          name: 'joe',
+        }],
+        transport: {
+          read: '',
+          detail: '',
+        },
       },
     }
 

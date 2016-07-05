@@ -1,12 +1,9 @@
-const noop = () => {}
-
 class DataSource {
   
   constructor (options) {
-    options = options = {}
+    options = _.extend({}, options)
     this.transport = options.transport || {}
     this.events = options.events || {}
-    
     this._data = options.data
     this.requestData = options.requestData
   }
@@ -33,16 +30,14 @@ class DataSource {
     return null
   }
 
-  getEventName (path) {
-    let paths = path.split('.')
-    let name = ['on', 'data', paths[0], paths[1]].join('-').replace(/-(\w)/g, (a, b) => b.toUpperCase())
-    return this.events[name] || noop
+  getEvent (name) {
+    return this.events[name] || (() => {})
   }
 
   request (type, data, callback) {
     let option = this.getAjaxOption(type, data)
     if (option) {
-      let did_hook = this.getEventName(`did.${type}`)
+      let did_hook = this.getEvent('requestEnd')
       ajax(option, resp => {
         callback && callback(resp)
         did_hook(resp)
@@ -61,7 +56,7 @@ class DataSource {
     }
 
     data = this.format(data, type)
-    let will_hook = this.getEventName(`will.${type}`)
+    let will_hook = this.getEvent('requestStart')
     if (2 === will_hook.length) {
       will_hook(data, () => {
         this.request(type, data, callback)
@@ -75,6 +70,14 @@ class DataSource {
 
   read (data, callback) {
     this.prepare('read', data, callback)
+  }
+
+  readDefault (data, callback) {
+    if (this.getAjaxOption('detail')) {
+      this.prepare('detail', data, callback)
+    } else {
+      this.prepare('read', data, callback)
+    }
   }
 
   save (data, callback) {

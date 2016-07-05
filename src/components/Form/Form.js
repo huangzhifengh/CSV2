@@ -1,71 +1,79 @@
 import React, { Component, PropTypes } from 'react';
-import FormElement from './FormElement'
 import DataSource from '../DataSource'
+import Element from './Element'
 
 class Form extends Component {
 
   static propTypes = {
-    fields: React.PropTypes.array.isRequired,
-    data: React.PropTypes.object,
-    type: React.PropTypes.string,
-    onChange: React.PropTypes.func
+    fields: PropTypes.array.isRequired,
+    data: PropTypes.object,
+    type: PropTypes.string,
+    onChange: PropTypes.func,
+    dataSource: PropTypes.object,
   }
 
   constructor (props) {
     super(props)
 
-    this.configMap = this._createConfigMap(this.props.fields)
-    this.dataSource = new DataSource()
-
-    this.isValid = true
+    this.dataSource = (props.dataSource instanceof DataSource) ? props.dataSource : new DataSource(props.dataSource)
+    this.elements = []
+    this.formData = _.extend({}, props.data)
+    this.state = {
+      remoteData: {}
+    }
   }
 
   render() {
+    _.extend(this.formData, this.state.remoteData)
 
-    let fields = $.extend(true, [], this.props.fields)
+    this.elements = [] // reset
+    let { fields, type } = this.props
+    fields = $.extend(true, [], fields)
     fields.slice(-1)[0].command && fields.pop()
-    let data = this.props.data || {}
 
-    return (
-      <form className="form-horizontal" onChange={this._onChange.bind(this)} data-id={data.id}>
-        {fields.map(config => {
-          return <FormElement type={this.props.type} config={config} value={data[config.name]} key={Math.random()} />
-        })}
-      </form>
-    )
+    return <form className="form-horizontal">
+      {fields.map((config, index) => {
+        return <Element 
+          ref={el => this.elements.push(el)}
+          key={index} 
+          mode={type} 
+          {...config}
+          formData={this.formData}
+          update={::this.update}
+        />
+      })}
+    </form>
   }
 
   componentDidMount () {
-    this.dataSource.read(data => {
-      data && this.setState({data})
+    this.dataSource.readDefault(remoteData => {
+      data && this.setState({remoteData})
     })
   }
 
-  _verify (e) {
-    let name = e.target.name
-    let value = e.target.value
-    let config = this.configMap[name]
-    let isValid = config.pattern ? config.pattern.test(value) : (config.validation ? config.validation(value) : true)
-    this.isValid = this.isValid && isValid
-    let $formGroup = $(e.target).closest('.form-group')
-    isValid ? $formGroup.removeClass('has-error') : $formGroup.addClass('has-error')
-
-    return this.isValid
+  update (field, value, isDefault) {
+    field && (
+      (
+        (
+          isDefault && _.isUndefined(this.formData[field])
+        ) || !isDefault
+      ) && (this.formData[field] = value)
+    )
   }
 
-  _onChange (e) {
-    this._verify(e)
-    this.props.onChange && this.props.onChange(e)
+  submit (type) {
+    let length = this.elements.length
+    let isValid = true
+    for (let i = 0; i < length; i++) {
+      isValid = this.elements[i].validate() && isValid
+    }
+    if (isValid) {
+      this.save(type, _.extend({}, this.formData))
+    }
   }
 
-  _createConfigMap (config) {
-    let o = {}
-    config.forEach(item => {
-      if (item.name) {
-        o[item.name] = item
-      }
-    })
-    return o
+  save (type, data) {
+    this.dataSource['edit' === type ? 'update' : type](data)
   }
 
 }

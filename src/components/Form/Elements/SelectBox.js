@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import styles from './SelectBox.css'
 import withStyles from 'with-style'
-import TreeLikeUI from '../TreeLikeUI'
+import TreeLikeUI from '../../TreeLikeUI'
 
 @withStyles(styles)
 class SelectBox extends Component {

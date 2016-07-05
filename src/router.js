@@ -12,7 +12,8 @@ export default store => {
       reset()
     },
     childRoutes: [
-      require('./modules/job')
+      require('./modules/job'),
+      require('./modules/DeviceType')
     ],
     onEnter (nextState, replace, cb) {
       const checkAuth = () => {

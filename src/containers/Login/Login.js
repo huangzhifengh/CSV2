@@ -48,7 +48,6 @@ class Login extends Page {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log(nextProps)
     if (!this.props.user && nextProps.user) {
       location.hash = '/'
     } else if (nextProps.loginError) {

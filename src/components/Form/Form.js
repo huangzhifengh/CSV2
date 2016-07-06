@@ -34,7 +34,7 @@ class Form extends Component {
     return <form className="form-horizontal">
       {fields.map((config, index) => {
         return <Element 
-          ref={el => this.elements.push(el)}
+          ref={el => el && this.elements.push(el)}
           key={index} 
           mode={type} 
           {...config}
@@ -46,9 +46,11 @@ class Form extends Component {
   }
 
   componentDidMount () {
-    this.dataSource.readDefault(resp => {
-      resp && this.setState({remoteData: resp.data ? resp.data: resp})
-    })
+    if ('edit' === this.props.type) {
+      this.dataSource.readDefault(resp => {
+        resp && this.setState({remoteData: resp.data ? resp.data: resp})
+      })
+    }
   }
 
   update (field, value, isDefault) {
@@ -61,7 +63,7 @@ class Form extends Component {
     )
   }
 
-  submit (type) {
+  submit (type, callback) {
     let length = this.elements.length
     let isValid = true
     for (let i = 0; i < length; i++) {
@@ -69,14 +71,9 @@ class Form extends Component {
       isValid = (el ? el.validate() : true) && isValid
     }
     if (isValid) {
-      this.save(type, _.extend({}, this.formData))
+      this.dataSource[type || 'save'](_.extend({}, this.formData), callback)
     }
   }
-
-  save (type, data) {
-    this.dataSource['edit' === type ? 'update' : type](data)
-  }
-
 }
 
 export default Form

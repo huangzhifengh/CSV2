@@ -23,8 +23,10 @@ class Table extends Component {
 
   constructor (props) {
     super(props)
-    
+
     this.dataSource = new DataSource(props.dataSource)
+
+    this.builtInCommands = ['create', 'update', 'destroy']
 
     this.state = {
       data: _.extend([], this.dataSource.data),
@@ -45,7 +47,7 @@ class Table extends Component {
 
     let props = { columns, checkable, detailInit, command, onClick: ::this.onCommandClick }
     
-    return <div className="table-container">
+    return <div className="data-table table-container">
       <Toolbar buttons={toolbar} onClick={::this.onCommandClick} />
       <table className="table table-bordered table-hover">
         <Colgroup {...props} />
@@ -57,21 +59,26 @@ class Table extends Component {
     </div>
   }
 
-  componentDidMount () {
+  read () {
     this.dataSource.read(data => {
       data && this.setState({data: data.data})
     })
   }
 
+  componentDidMount () {
+    if (this.props.autoRead !== false) this.read()
+  }
+
   onCommandClick (command, data, e) {
     this.dataSource.setActiveData(data)
     if (command.click) command.click(data)
-    else {
+    else if (_(this.builtInCommands).indexOf(command.name) !== -1) {
       let props = {
         type: command.name,
         data: data,
         fields: this.props.columns,
         dataSource: this.dataSource,
+        confirmCallback: ::this.read,
       }
       let dModalContainer = this.refs.dataModalContainer
       unmountComponentAtNode(dModalContainer)

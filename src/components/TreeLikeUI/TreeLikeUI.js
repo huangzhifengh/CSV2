@@ -54,7 +54,7 @@ class TreeLikeUI extends Component {
   render() {
     return (
       <ul className={cx({'tree-ui': true, [this.props.type]: true})}>
-        {this.state.nodes.length ? this.state.nodes : <div className="load-overlay show"></div>}
+        {this.state.nodes}
       </ul>
     )
   }

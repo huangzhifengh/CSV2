@@ -5,18 +5,15 @@
 
   .custom-select-option-list {
     position: absolute;
-    top: 100%;
+    top: 110%;
     left: 0;
     right: 0;
-    border: 1px solid #CCC;
     z-index: 1;
     background: #fff;
-    border-top: none;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
     max-height: 200px;
-    min-height: 50px;
+    min-height: 20px;
     overflow-y: scroll;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, .1);
     display: none;
 
     a {
@@ -31,5 +28,7 @@
   &.has-feedback .form-control-feedback {
     right: 0;
     z-index: 0;
+    position: absolute;
+    line-height: 34px;
   }
 }

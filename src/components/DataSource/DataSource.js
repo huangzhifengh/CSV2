@@ -3,7 +3,6 @@ class DataSource {
   constructor (options) {
     _.extend(this, {}, {
       transport: {},
-      events: {},
       idField: 'id',
     }, options)
 
@@ -33,7 +32,7 @@ class DataSource {
   }
 
   getEvent (name) {
-    return this.events[name] || (() => {})
+    return this[name] || (() => {})
   }
 
   request (type, data, callback) {
@@ -100,7 +99,7 @@ class DataSource {
   }
 
   destroy (id, callback) {
-    this.prepare('destroy', { id }, callback)
+    this.prepare('destroy', {[id ? 'id' : 'nothing']: id}, callback)
   }
 
   setActiveData (data) {

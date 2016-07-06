@@ -21,26 +21,25 @@ class Module extends Page {
         name: 'parentId',
         type: 'select',
         content: 'tree',
-        key: 'id',
-        value: 'name',
+        valueField: 'id',
+        labelField: 'name',
         data: '/api/dervicesType/tree',
         //hidden: true,
-        columnHidden: true
-      }, {
-        title: '描述',
-        name: 'des'
+        columnHidden: true,
       }, {
         command: [{
-          name: 'edit',
+          name: 'update',
           text: '编辑'
         }, {
-          name: 'delete',
+          name: 'destroy',
           text: '删除'
         }]
       }],
       toolbar: [{
         name: 'create',
-        text: 'add',
+        text: '新增',
+      }, {
+        text: '其他'
       }],
       dataSource: {
         transport: {
@@ -74,8 +73,8 @@ class Module extends Page {
             name: 'parentId',
             type: 'select',
             content: 'tree',
-            key: 'id',
-            value: 'name',
+            valueField: 'id',
+            labelField: 'name',
             data: '/api/dervicesType/tree',
             //hidden: true,
             columnHidden: true
@@ -84,18 +83,37 @@ class Module extends Page {
             name: 'des'
           }, {
             command: [{
-              name: 'edit',
+              name: 'update',
               text: '编辑'
             }, {
-              name: 'delete',
+              name: 'destroy',
               text: '删除'
             }]
           }],
           dataSource: {
-            data: data.children
-          }
+            data: data.children,
+            transport: {
+              read: '/api/dervicesType/tree',
+              detail: data => ({
+                url: '/api/dervicesType/findById',
+                data: {
+                  id: data.id
+                }
+              }),
+              create: '/api/dervicesType/add',
+              update: '/api/dervicesType/edit',
+              destroy: data => ({
+                url: '/api/dervicesType/del',
+                data: {
+                  id: data.id
+                }
+              }),
+            },
+          },
+          autoRead: false,
         }
-      }
+      },
+      checkable: true,
     }
   }
 

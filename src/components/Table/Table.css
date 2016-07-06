@@ -1,27 +1,16 @@
 .data-table {
   position: relative;
 
-  .data-table-empty-row {
-    height: 150px;
+  .toolbar {
+    padding: 8px;
+    padding-left: 0;
+
+    .btn {
+      margin-right: 8px;
+    }
   }
-}
-#__dataTableMessageArea {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-.pagination {
-  margin: 0 10px 0 0;
-  vertical-align: middle;
-}
-.data-table-th {
-  text-align: left;
-  background: #F5F5F5;
-}
-.toolbar-vertical-align {
-  vertical-align: middle;
-}
-.btn{
-  display: inline;
+
+  .expand-toggle-icon.expand {
+    transform: rotate(45deg);
+  }
 }

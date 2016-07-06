@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
+import TreeLikeUI from '../../TreeLikeUI'
 import styles from './SelectBox.css'
 import withStyles from 'with-style'
-import TreeLikeUI from '../../TreeLikeUI'
 
 @withStyles(styles)
 class SelectBox extends Component {
 
   static propTypes = {
-    value: React.PropTypes.string,
+    value: PropTypes.string,
   }
 
   constructor (props) {
@@ -18,8 +18,8 @@ class SelectBox extends Component {
       data: []
     }
 
-    if ('array' == $.type(this.props.data)) {
-      this.state.data = this.props.data
+    if (_.isArray(props.data)) {
+      this.state.data = props.data
       this.localType = true
     }
 
@@ -27,24 +27,24 @@ class SelectBox extends Component {
   }
 
   getSelectElement () {
+
     let config = this.props
 
     if ('tree' === config.content) {
       return <div className="custom-select-wrapper has-feedback">
-        <input ref="fakeInput" className="form-control" defaultValue={this.props.value} onClick={this._toggleSelectContent.bind(this)} />
-        <div className="custom-select-option-list"></div>
-        <span className="glyphicon glyphicon-triangle-bottom form-control-feedback"></span>
-        <input name={config.name} ref="realInput" type="text" className="hide" defaultValue={this.props.value} />
+        <div ref="fakeInput" className="form-control" onClick={this._toggleSelectContent.bind(this)}>{config.value}</div>
+        <span className="glyphicon glyphicon-triangle-bottom form-control-feedback" />
+        <div ref="list" className="custom-select-option-list"></div>
+        <input ref="realInput" name={config.name} type="text" className="hide" defaultValue={config.value} />
       </div>
     }
 
     return <div>
-      <select name={config.name} className="form-control" value={this.props.value} onClick={this.init.bind(this)} onChange={this._onChange}>
+      <select name={config.name} className="form-control" value={config.value} onClick={this.init.bind(this)} onChange={this._onChange}>
         {this.state.data.map(item => {
-          return <option key={item[config.key || 'id']} value={item[config.key || 'id']}>{item[config.value || 'text']}</option>
+          return <option key={item[config.valueField]} value={item[config.valueField]}>{item[config.labelField]}</option>
         })}
       </select> 
-      {!this.localType && <span className="help-block">点击加载数据</span>}
     </div>
   }
 
@@ -57,16 +57,13 @@ class SelectBox extends Component {
   init () {
     if (!this.localType && !this.hasInit) {
       this.hasInit = true
-      let data = this.props.data
-      if (data && 'string' === typeof data) {
-        ajax({
-          url: this.props.data
-        }, resp => {
-          this.setState({
-            data: resp.data
-          })
+      ajax({
+        url: this.props.data
+      }, resp => {
+        this.setState({
+          data: resp.data
         })
-      }
+      })
     }
   }
 
@@ -76,9 +73,10 @@ class SelectBox extends Component {
   }
 
   _onSelected (data) {
-    this.refs['fakeInput'].value = data[this.props.value || 'text']
+    let { labelField, valueField } = this.props
+    this.refs['fakeInput'].innerHTML = data[labelField]
     $(this.refs['fakeInput']).click()
-    this.refs['realInput'].value = data.id
+    this.refs['realInput'].value = data[valueField]
     this.refs['realInput'].dispatchEvent(new Event('input', {bubbles: true}))
   }
 
@@ -89,13 +87,12 @@ class SelectBox extends Component {
         data: this.props.data,
         nolink: true,
         onItemClick: this._onSelected.bind(this),
-        textField: this.props.value || 'text'
+        textField: this.props.labelField
       }
-      ReactDOM.render(<TreeLikeUI {...props} />, $(e.target).next('div').get(0))
+      render(<TreeLikeUI {...props} />, this.refs.list)
     }
 
-    e.stopPropagation()
-    $(e.target).next('div').slideToggle('fast')
+    $(this.refs.list).slideToggle('fast')
   }
 
 }

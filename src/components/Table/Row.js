@@ -23,10 +23,16 @@ class TableRow extends Component {
   }
 
   render() {
-    let { data, columns, command, hasDetail, checkable, onClick, ...other } = this.props
+    let { data, columns, command, hasDetail, checkable, onClick, toggleSubrow, ...other } = this.props
     
     return <tr {...other} >
-      {hasDetail && <Cell onClick={::this.toggleSubRow}><span className="icon glyphicon glyphicon-triangle-right" /></Cell> }
+      {hasDetail && <Cell 
+        onClick={() => {
+          toggleSubrow(other['data-index'])
+          this.toggleSubrow()
+        }}>
+          <span ref="expandIcon" className="icon glyphicon glyphicon-triangle-right expand-toggle-icon" />
+      </Cell> }
       {checkable && <Cell><input type="checkbox" /></Cell>}
       {columns.map((config, index) => {
         return !config.columnHidden && 
@@ -46,8 +52,8 @@ class TableRow extends Component {
     </tr>
   }
 
-  toggleSubRow () {
-    console.log('toggle sub row')
+  toggleSubrow () {
+    $(this.refs.expandIcon).toggleClass('expand')
   }
 }
 

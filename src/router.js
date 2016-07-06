@@ -4,7 +4,7 @@ import NoMatch from './containers/NoMatch'
 import { isLoaded as isAuthLoaded, auth as doAuth } from './redux/modules/auth'
 import { reset } from './ajax/ajax'
 
-export default store => {
+export default Module => {
   const routes = [{
     path: '/',
     component: App,
@@ -13,11 +13,11 @@ export default store => {
     },
     childRoutes: [
       require('./modules/job'),
-      require('./modules/DeviceType')
+      require('./modules/system/DeviceType')
     ],
     onEnter (nextState, replace, cb) {
       const checkAuth = () => {
-        const {auth: { user }} = store.getState()
+        const {auth: { user }} = Module.getState()
 
         if (!user) {
           replace('/login')
@@ -26,11 +26,11 @@ export default store => {
         cb()
       }
 
-      if (!isAuthLoaded(store.getState())) {
-        store.dispatch(doAuth()).then(checkAuth)
+      if (!isAuthLoaded(Module.getState())) {
+        Module.dispatch(doAuth()).then(checkAuth)
       } else {
         checkAuth()
-        store.dispatch(doAuth()).then(checkAuth)
+        Module.dispatch(doAuth()).then(checkAuth)
       }
       // cb()
     },

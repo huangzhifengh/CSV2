@@ -41,9 +41,11 @@ class DataModal extends Component {
     }
   }
 
-  confirmCallback () {
-    $(this.refs.dataModal).modal('hide')
-    this.props.confirmCallback()
+  confirmCallback (resp) {
+    if (resp) {
+      $(this.refs.dataModal).modal('hide')
+      this.props.confirmCallback()
+    }
   }
 
 }

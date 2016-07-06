@@ -41,14 +41,15 @@ class Body extends Component {
     if (data.length) {
       data.map((item, index) => {
         rows.push(<Row key={index} {...other} data={item} data-index={index} hasDetail={!!detailInit} toggleSubrow={::this.toggleSubrow} />)
-        detailInit && rows.push(<SubRow 
-                                ref={row => row && this.subRows.push(row)}
-                                key={(index + 1) * 10} 
-                                initFunction={detailInit} 
-                                span={this.span} 
-                                data={item} 
-                                className='sub-row' 
-                                data-index={index} />)
+        detailInit && rows.push(
+          <SubRow 
+            key={Math.random() * 10} 
+            ref={row => row && this.subRows.push(row)} 
+            initFunction={detailInit} 
+            span={this.span} 
+            data={item} 
+            className='sub-row' 
+            data-index={index} />)
       })
     } else {
       rows.push(<tr key={Math.random()} className="data-table-empty-row"><td colSpan={this.span}>暂无数据</td></tr>)

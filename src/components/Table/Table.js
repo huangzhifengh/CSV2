@@ -24,7 +24,8 @@ class Table extends Component {
   constructor (props) {
     super(props)
 
-    this.dataSource = new DataSource(props.dataSource)
+    this.dataSource = (props.dataSource instanceof DataSource) ? props.dataSource : new DataSource(props.dataSource)
+    this.dataSource.setRefreshHook(::this.refresh)
 
     this.builtInCommands = ['create', 'update', 'destroy']
 
@@ -59,10 +60,12 @@ class Table extends Component {
     </div>
   }
 
+  refresh (resp) {
+    resp && this.setState({data: resp.data})
+  }
+
   read () {
-    this.dataSource.read(data => {
-      data && this.setState({data: data.data})
-    })
+    this.dataSource.read(::this.refresh)
   }
 
   componentDidMount () {

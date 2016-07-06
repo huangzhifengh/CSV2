@@ -1,10 +1,26 @@
 import React from 'react'
 import Page from 'base-page'
 import Table from 'components/Table'
+import DataSource from 'components/DataSource'
 
 class Module extends Page {
 
   getConfig () {
+    let dataSource = new DataSource({
+      transport: {
+        read: '/api/dervicesType/tree',
+        detail: data => ({
+          url: '/api/dervicesType/findById',
+          data: {
+            id: data.id
+          }
+        }),
+        create: '/api/dervicesType/add',
+        update: '/api/dervicesType/edit',
+        destroy: '/api/dervicesType/del'
+      },
+    })
+
     return {
       panelTitle: {
         title: '系统配置-设备类型',
@@ -41,20 +57,7 @@ class Module extends Page {
       }, {
         text: '其他'
       }],
-      dataSource: {
-        transport: {
-          read: '/api/dervicesType/tree',
-          detail: data => ({
-            url: '/api/dervicesType/findById',
-            data: {
-              id: data.id
-            }
-          }),
-          create: '/api/dervicesType/add',
-          update: '/api/dervicesType/edit',
-          destroy: '/api/dervicesType/del'
-        },
-      },
+      dataSource: dataSource,
       detailInit: data => {
         return {
           columns: [{
@@ -93,7 +96,6 @@ class Module extends Page {
           dataSource: {
             data: data.children,
             transport: {
-              read: '/api/dervicesType/tree',
               detail: data => ({
                 url: '/api/dervicesType/findById',
                 data: {
@@ -105,10 +107,15 @@ class Module extends Page {
               destroy: data => ({
                 url: '/api/dervicesType/del',
                 data: {
-                  id: data.id
+                  ids: data.id
                 }
               }),
             },
+            requestEnd: (type, resp) => {
+              if ('read' !== type && resp) {
+                dataSource.sync()
+              }
+            }
           },
           autoRead: false,
         }

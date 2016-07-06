@@ -9,10 +9,6 @@ class DataSource {
     this.activeData = null
   }
   
-  setFilter (filter) {
-    this.filter = filter
-  }
-
   parse (data) {
     return this.transport.parse ? this.transport.parse(data) : data
   }
@@ -40,11 +36,10 @@ class DataSource {
     if (option) {
       let did_hook = this.getEvent('requestEnd')
       ajax(option, resp => {
-        callback && callback(resp)
-        did_hook(resp)
+        did_hook(type, resp)
         callback && callback(this.parse(resp))
       }, err => {
-        did_hook(false, err)
+        did_hook(type, false, err)
         callback && callback(false, err)
       })
     }
@@ -58,17 +53,19 @@ class DataSource {
 
     data = this.format(data, type)
     let will_hook = this.getEvent('requestStart')
-    if (2 === will_hook.length) {
-      will_hook(data, () => {
+    if (3 === will_hook.length) {
+      will_hook(type, data, () => {
         this.request(type, data, callback)
       })
     } else {
-      if (false !== will_hook(data)) {
+      if (false !== will_hook(type, data)) {
         this.request(type, data, callback)
       }
     }
   }
 
+
+  /***APIs***/
   read (data, callback) {
     this.prepare('read', data, resp => {
       let data = resp
@@ -102,9 +99,25 @@ class DataSource {
     this.prepare('destroy', {[id ? 'id' : 'nothing']: id}, callback)
   }
 
+  sync () {
+    this.prepare('read', resp => {
+      this.getEvent('refreshHook')(resp)
+    })
+  }
+
+  filter (filter) {
+    this.filter = filter
+    this.sync()
+  }
+
   setActiveData (data) {
     this.activeData = data
   }
+
+  setRefreshHook (hook) {
+    this.refreshHook = hook 
+  }
+  /***APIs end***/
 
 }
 

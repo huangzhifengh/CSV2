@@ -1,10 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 class Page extends Component {
 
   loaded () {
     $.loaded()
   }
+
+  /*static contextTypes = {
+    onSetTitle: PropTypes.func.isRequired
+  }*/
 
 }
 

@@ -32,6 +32,13 @@ class Table extends Component {
     this.state = {
       data: _.extend([], this.dataSource.data),
     }
+
+    this.events = props.events || {}
+    console.log(this.events)
+  }
+
+  componentDidMount () {
+    if (this.props.autoRead !== false) this.read()
   }
 
   render () {
@@ -49,12 +56,17 @@ class Table extends Component {
     let props = { columns, checkable, detailInit, command, onClick: ::this.onCommandClick }
     
     return <div className="data-table table-container">
-      <Toolbar buttons={toolbar} onClick={::this.onCommandClick} />
-      <table className="table table-bordered table-hover">
-        <Colgroup {...props} />
-        <Header {...props} />
-        <Body {...props} data={this.state.data} />
-      </table>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <strong>Title</strong>
+          <Toolbar buttons={toolbar} onClick={::this.onCommandClick} />
+        </div>
+        <table className="table table-bordered table-hover">
+          <Colgroup {...props} />
+          <Header {...props} />
+          <Body {...props} data={this.state.data} />
+        </table>
+      </div>
       <Pagination {...pagination} dataSource={this.dataSource} />
       <div ref="dataModalContainer"></div>
     </div>
@@ -66,10 +78,6 @@ class Table extends Component {
 
   read () {
     this.dataSource.read(::this.refresh)
-  }
-
-  componentDidMount () {
-    if (this.props.autoRead !== false) this.read()
   }
 
   onCommandClick (command, data, e) {

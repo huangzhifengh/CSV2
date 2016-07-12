@@ -54,8 +54,6 @@ class Module extends Page {
       toolbar: [{
         name: 'create',
         text: '新增',
-      }, {
-        text: '其他'
       }],
       dataSource: dataSource,
       detailInit: data => {
@@ -120,7 +118,7 @@ class Module extends Page {
           autoRead: false,
         }
       },
-      checkable: true,
+      checkable: false,
     }
   }
 

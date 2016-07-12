@@ -96,7 +96,7 @@ class DataSource {
   }
 
   destroy (id, callback) {
-    this.prepare('destroy', {[id ? 'id' : 'nothing']: id}, callback)
+    this.prepare('destroy', {[id ? 'ids' : 'nothing']: id}, callback)
   }
 
   sync () {

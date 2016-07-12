@@ -2,8 +2,8 @@
   position: relative;
 
   .toolbar {
-    padding: 8px;
-    padding-left: 0;
+    float: right;
+    vertical-align: middle;
 
     .btn {
       margin-right: 8px;
@@ -12,5 +12,9 @@
 
   .expand-toggle-icon.expand {
     transform: rotate(45deg);
+  }
+  .data-table-th {
+    text-align: left;
+    background: #F5F5F5;
   }
 }

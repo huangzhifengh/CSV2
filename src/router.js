@@ -13,7 +13,8 @@ export default Module => {
     },
     childRoutes: [
       require('./modules/job'),
-      require('./modules/system/DeviceType')
+      require('./modules/system/DeviceType'),
+      require('./modules/system/Role')
     ],
     onEnter (nextState, replace, cb) {
       const checkAuth = () => {

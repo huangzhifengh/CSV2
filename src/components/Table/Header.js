@@ -5,8 +5,8 @@ class Header extends Component {
   render () {
     return <thead>
       <tr>
-        {this.props.detailInit && <th></th>}
-        {this.props.checkable && <th><input type="checkbox" /></th>}
+        {this.props.detailInit && <th className="data-table-th"></th>}
+        {this.props.checkable && <th className="data-table-th"><input type="checkbox" /></th>}
         {this.props.columns.map((item, index) => {
           return !item.columnHidden && <th className="data-table-th" key={index}>{item.title}</th>
         })}

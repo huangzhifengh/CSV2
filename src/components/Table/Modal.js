@@ -22,7 +22,7 @@ class DataModal extends Component {
           <div className="modal-body">{'destroy' === this.props.type ? <p>确认删除该条数据？</p> : <Form ref="form" {...this.props} />}</div>
           <div className="modal-footer">
             <button type="button" className="btn btn-default" data-dismiss="modal">关闭</button>
-            <button type="button"  className="btn btn-primary" onClick={::this.onConfirm}>确认</button>
+            <button type="button" className="btn btn-primary" onClick={::this.onConfirm}>确认</button>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ class Module extends Page {
   render () {
     let config = {
       columns: [{
-        title: '姓名2', 
+        title: '姓名', 
         name: 'name',
         validation: (value, data) => {
           return value === 'joezhou'

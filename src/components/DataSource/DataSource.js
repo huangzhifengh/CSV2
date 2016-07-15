@@ -64,7 +64,6 @@ class DataSource {
     }
   }
 
-
   /***APIs***/
   read (data, callback) {
     this.prepare('read', data, resp => {

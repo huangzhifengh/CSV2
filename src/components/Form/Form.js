@@ -18,6 +18,11 @@ class Form extends Component {
     this.dataSource = (props.dataSource instanceof DataSource) ? props.dataSource : new DataSource(props.dataSource)
     this.elements = []
     this.formData = _.extend({}, props.data)
+    this._data_ = {}
+    if ('update' === props.type) {
+      this._data_[this.dataSource.idField] = props.data[this.dataSource.idField]
+    }
+
     this.state = {
       remoteData: {}
     }
@@ -46,7 +51,7 @@ class Form extends Component {
   }
 
   componentDidMount () {
-    if ('edit' === this.props.type) {
+    if ('update' === this.props.type) {
       this.dataSource.readDefault(resp => {
         resp && this.setState({remoteData: resp.data ? resp.data: resp})
       })
@@ -59,7 +64,7 @@ class Form extends Component {
         (
           isDefault && _.isUndefined(this.formData[field])
         ) || !isDefault
-      ) && (this.formData[field] = value)
+      ) && (this._data_[field] = value)
     )
   }
 
@@ -71,7 +76,7 @@ class Form extends Component {
       isValid = (el ? el.validate() : true) && isValid
     }
     if (isValid) {
-      this.dataSource[type || 'save'](_.extend({}, this.formData), callback)
+      this.dataSource[type || 'save'](_.extend({}, this._data_), callback)
     }
   }
 }

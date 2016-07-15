@@ -9,26 +9,20 @@ class Module extends Page {
     let dataSource = new DataSource({
       transport: {
         read: '/api/dervicesType/tree',
-        detail: data => ({
-          url: '/api/dervicesType/findById',
-          data: {
-            id: data.id
-          }
-        }),
         create: '/api/dervicesType/add',
         update: '/api/dervicesType/edit',
-        destroy: '/api/dervicesType/del'
+        destroy: '/api/dervicesType/del',
+        requestStart: (type, data) => {
+          return true 
+        } 
       },
     })
 
     return {
-      panelTitle: {
-        title: '系统配置-设备类型',
-        toolbar: {}
-      },
+      title: '设备类型',
       columns: [{
         title: '名称',
-        name: 'name'
+        name: 'name',
       }, {
         title: '代码',
         name: 'code'
@@ -60,7 +54,7 @@ class Module extends Page {
         return {
           columns: [{
             title: '名称',
-            name: 'name'
+            name: 'name',
           }, {
             title: '代码',
             name: 'code'

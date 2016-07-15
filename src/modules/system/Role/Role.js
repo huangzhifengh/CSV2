@@ -52,7 +52,7 @@ class Module extends Page {
           text: '删除'
         }, {
           name: 'resConfig',
-          text: '资源配置'
+          text: '资源配置',
         }]
       }],
       toolbar: [{

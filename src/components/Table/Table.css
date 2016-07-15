@@ -1,12 +1,19 @@
+@import 'variable.css';
+
 .data-table {
   position: relative;
 
   .toolbar {
-    float: right;
-    vertical-align: middle;
+    background: #F5F5F5;
+    border: 1px solid var(--border-color);
+    border-bottom: none;
+    padding: 8px;
+    padding-left: 0px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 
-    .btn {
-      margin-right: 8px;
+    .title {
+      font-weight: bold;
     }
   }
 

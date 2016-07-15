@@ -34,7 +34,6 @@ class Table extends Component {
     }
 
     this.events = props.events || {}
-    console.log(this.events)
   }
 
   componentDidMount () {
@@ -42,7 +41,7 @@ class Table extends Component {
   }
 
   render () {
-    let { columns, pagination, toolbar = [], checkable, detailInit } = this.props
+    let { title, columns, pagination, toolbar = [], checkable, detailInit } = this.props
     columns = $.extend(true, [], columns)
     let command = columns.slice(-1)[0] || {}
 
@@ -56,17 +55,12 @@ class Table extends Component {
     let props = { columns, checkable, detailInit, command, onClick: ::this.onCommandClick }
     
     return <div className="data-table table-container">
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <strong>Title</strong>
-          <Toolbar buttons={toolbar} onClick={::this.onCommandClick} />
-        </div>
-        <table className="table table-bordered table-hover">
-          <Colgroup {...props} />
-          <Header {...props} />
-          <Body {...props} data={this.state.data} />
-        </table>
-      </div>
+      <Toolbar title={title} buttons={toolbar} onClick={::this.onCommandClick} />
+      <table className="table table-bordered table-hover">
+        <Colgroup {...props} />
+        <Header {...props} />
+        <Body {...props} data={this.state.data} />
+      </table>
       <Pagination {...pagination} dataSource={this.dataSource} />
       <div ref="dataModalContainer"></div>
     </div>

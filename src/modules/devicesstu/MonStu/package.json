@@ -1,0 +1,6 @@
+{
+  "name": "MonStu",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MonStu.js"
+}

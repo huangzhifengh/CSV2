@@ -1,14 +1,15 @@
 module.exports = {
-  path: 'role',
+  path: 'linkctrllist',
   getComponent (location, cb) {
     require.ensure([], require => {
-      cb(null, require('./Role'))
+      cb(null, require('./LinkCtrl'))
     })
   },
   getChildRoutes (location, cb) {
     require.ensure([], require => {
       cb(null, [
-        require('./ResConf/index')
+        require('./Light/index'),
+        require('./Alert/index')
       ])
     })
   }

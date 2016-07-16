@@ -206,7 +206,7 @@ ul {
 }
 
 .panel-default>.panel-heading {
-  background: linear-gradient(#eee,#c7c7c7);
+  /*background: linear-gradient(#eee,#c7c7c7);*/
 }
 
 #__dataModal label.checkbox-inline:first-child {

@@ -1,0 +1,6 @@
+{
+  "name": "GateWayStu",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./GateWayStu.js"
+}

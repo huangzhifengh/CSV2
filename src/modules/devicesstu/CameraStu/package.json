@@ -1,0 +1,6 @@
+{
+  "name": "CameraStu",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./CameraStu.js"
+}

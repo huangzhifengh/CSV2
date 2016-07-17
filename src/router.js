@@ -15,7 +15,8 @@ export default Module => {
       require('./modules/job'),
       require('./modules/system/DeviceType/index'),
       require('./modules/system/Role/index'),
-      require('./modules/linkctrl/LinkCtrl/index')
+      require('./modules/linkctrl/LinkCtrl/index'),
+      require('./modules/devicesstu/MeasStu/index')
     ],
     onEnter (nextState, replace, cb) {
       const checkAuth = () => {

@@ -12,9 +12,10 @@ export default Module => {
       reset()
     },
     childRoutes: [
-      require('./modules/job'),
+      //require('./modules/job'),
       require('./modules/system/DeviceType/index'),
       require('./modules/system/Role/index'),
+      require('./modules/job/Job/index'),
       require('./modules/linkctrl/LinkCtrl/index'),
       require('./modules/devicesstu/MeasStu/index')
     ],

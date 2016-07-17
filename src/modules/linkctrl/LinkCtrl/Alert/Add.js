@@ -10,40 +10,48 @@ class Module extends Page {
 	    title: "烟感",
 	    name: "smogId",
 	    value: "name",
+      labelField: "name",
+      valueField: "smogId",
 	    data: "/api/link/ctrl/device?subType=104101"
     }
     let props5 = {
-        type: "select", 
-        title: "声光报警",
-        name: "soundId",
-        value: "name",
-        data: "/api/link/ctrl/device?subType=104105"
+      type: "select", 
+      title: "声光报警",
+      name: "soundId",
+      value: "name",
+      labelField: "name",
+      valueField: "soundId",
+      data: "/api/link/ctrl/device?subType=104105"
     }
     let props6 = {
-        type: "select", 
-        title: "烟类型",
-        name: "smogType",
-        value: "name",
-        data: [
-          {id: "0",name: "烟雾"},
-          {id: "1",name: "一氧化碳"},
-          {id: "2",name: "二氧化碳"},
-          {id: "3",name: "天燃气"}
-        ]
+      type: "select", 
+      title: "烟类型",
+      name: "smogType",
+      value: "name",
+      labelField: "name",
+      valueField: "id",
+      data: [
+        {id: "0",name: "烟雾"},
+        {id: "1",name: "一氧化碳"},
+        {id: "2",name: "二氧化碳"},
+        {id: "3",name: "天燃气"}
+      ]
     }
     let props7 = {
-        type: "select", 
-        title: "声音",
-        name: "soundType",
-        value: "name",
-        data: [
-          //{id: "0",name: "停止"},
-          {id: "1",name: "盗窃报警"},
-          {id: "2",name: "火警"},
-          {id: "3",name: "紧急事件"},
-          {id: "4",name: "布防"},
-          //{id: "5",name: "撤防"}
-        ]
+      type: "select", 
+      title: "声音",
+      name: "soundType",
+      value: "name",
+      labelField: "name",
+      valueField: "id",
+      data: [
+        //{id: "0",name: "停止"},
+        {id: "1",name: "盗窃报警"},
+        {id: "2",name: "火警"},
+        {id: "3",name: "紧急事件"},
+        {id: "4",name: "布防"},
+        //{id: "5",name: "撤防"}
+      ]
     }
 
     return (

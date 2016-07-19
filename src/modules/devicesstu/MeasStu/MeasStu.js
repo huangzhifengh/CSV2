@@ -14,7 +14,7 @@ class Module extends Page {
       columns: [
         {title:'设备名称',name:'name'},
         {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
-        {title:'用水总量(m³)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.waterValue}return show}},
+        {title:'用水总量(m³)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.waterValue}return data.deviceStatu.waterValue}},
         {title:'漏水告警',name:'',parse:(value,data)=>{let show='正常';if(data.deviceStatu){if(data.deviceStatu.leakage){show='漏水'}}return show}},
         {title:'电池状态',name:'',parse:(value,data)=>{let show='正常';return show}},
         {title:'剩余电量(%)',name:'',parse:(value,data)=>{let show='99%';return show}},

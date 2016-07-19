@@ -12,12 +12,19 @@ export default Module => {
       reset()
     },
     childRoutes: [
-      //require('./modules/job'),
+      //system
       require('./modules/system/DeviceType/index'),
       require('./modules/system/Role/index'),
+      //job
+      //require('./modules/job'),
       require('./modules/job/Job/index'),
+      //linkCtrl
       require('./modules/linkctrl/LinkCtrl/index'),
-      require('./modules/devicesstu/MeasStu/index')
+      //devicesstu
+      require('./modules/devicesstu/MeasStu/index'),
+      require('./modules/devicesstu/OnOffStu/index'),
+      require('./modules/devicesstu/MonStu/index'),
+      require('./modules/devicesstu/ReacStu/index'),
     ],
     onEnter (nextState, replace, cb) {
       const checkAuth = () => {

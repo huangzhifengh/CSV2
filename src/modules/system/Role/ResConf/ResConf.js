@@ -5,12 +5,18 @@ import DataSource from 'components/DataSource'
 
 class Module extends Page {
 
+  componentDidMount (){
+    this._setDefaultChecked(this.props.params.id);
+  }
+
   render() {
     return (
       <div className="container-fluid">
         <div className="panel panel-default">
           <div className="panel-heading">角色管理-资源配置</div>
-          <TreeLikeUI data={'/api/resources/tree?resourcesType=ALL'} type='tree' checkable={true} nolink={true} />
+          <div id='resConfig'>
+            <TreeLikeUI data={'/api/resources/tree?resourcesType=ALL'} type='tree' checkable={true} nolink={true} />
+          </div>
           <button id="resConf" type="button" className="btn btn-default btn-sm" onClick={this._onSubmit.bind(this)}>提交</button>
         </div>
       </div>
@@ -54,17 +60,18 @@ class Module extends Page {
     }
   }
 
-  _setDefaultChecked (data) {
+  _setDefaultChecked (id) {
     ajax({
-      url: `/api/role/findById?id=${data.id}`,
-      success: resp => {
-        if (resp && 0 === resp.code) {
-          let resourcesIds = resp.data.resourcesIds
-          $.each(resourcesIds, (i, e) => {
-            $('#resConfig .tree-node-ckb[data-id=' + e + ']').prop('checked', true)
-          })
-        }
+      url: `/api/role/findById?`+id
+    }, resp => {
+      if (resp && 0 === resp.code) {
+        let resourcesIds = resp.data.resourcesIds;
+        $.each(resourcesIds, (i, e) => {
+          $('#resConfig .tree-node-ckb[data-id=' + e + ']').prop('checked', true);
+        })
       }
+    }, err => {
+      console.log(err)
     })
   }
 

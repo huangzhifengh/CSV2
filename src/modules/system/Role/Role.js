@@ -51,8 +51,7 @@ class Module extends Page {
           name: 'resConfig',
           text: '资源配置',
           click: (data) => {
-            console.log(data)
-            window.location.href = "#role/resconf"
+            window.location.href = '#role/resconf/id='+data.id;
           }
         }]
       }],

@@ -1,5 +1,5 @@
 module.exports = {
-  path: 'resconf',
+  path: 'resconf/:id',
   getComponent (location, cb) {
     require.ensure([], require => {
       cb(null, require('./ResConf'))

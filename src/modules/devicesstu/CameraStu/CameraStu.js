@@ -1,57 +1,50 @@
-import React, { Component, PropTypes } from 'react'
-import DataTable from '../../../components/DataTable'
+import React from 'react';
+import Page from 'base-page';
+import Table from 'components/Table';
+import DataSource from 'components/DataSource';
 
-class Module extends Component {
+class Module extends Page {
 
-  constructor () {
-    super()
-    this.tabTitle = '设备状态-摄像头'
-    this.state = {
-      tableConfig: {
-        panelTitle: {
-          title: '摄像头',
-          toolbar: {}
-        },
-        columns: [{
-          title: '设备名称',
-          name: 'name',
-        }, {
-          title: '区域',
-          name: 'location'
-        }, {
-          title: '拍照',
-          name: ''
-        }, {
-          title: '实时查看',
-          name: ''
-        }, {
-          title: '旋转',
-          name: ''
-        }],
-        transport: {
-          read: {
-            url: '/api/devices/statu/list?subType=111111',
-            parse: () => {}
-          }
-        }
-      }
+  getConfig1 () {
+    return {
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=109101'}}),
+      title: '摄像头',
+      checkable: false,
+      pagination: {show:true,pageSize:10},
+      columns: [
+        {title:'设备名称',name:'name'},
+        {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
+        {title:'状态',name:'devSelfStatus',parse:(value,data)=>{return '正常'}},
+        {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
+        {command:[
+          {name:'1',text:'拍照',
+            click: (data) => {
+              alert('暂时无法操作')
+            }
+          },
+          {name:'2',text:'实时查看',
+            click: (data) => {
+              alert('暂时无法操作')
+            }
+          },
+          {name:'3',text:'旋转',
+            click: (data) => {
+              alert('暂时无法操作')
+            }
+          },
+        ]}
+      ]
     }
   }
 
-  static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired,
-  }
-
   render() {
-    this.context.onSetTitle(this.tabTitle)
-
     return (
       <div className="container-fluid">
-        <DataTable config={this.state.tableConfig} />
+        <Table {...this.getConfig1()} />
       </div>
     )
   }
 
 }
 
-export default Module
+module.exports = Module

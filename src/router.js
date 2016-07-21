@@ -1,8 +1,9 @@
-import App from './containers/App'
-import Login from './containers/Login'
-import NoMatch from './containers/NoMatch'
-import { isLoaded as isAuthLoaded, auth as doAuth } from './redux/modules/auth'
-import { reset } from './ajax/ajax'
+import App from './containers/App';
+import Login from './containers/Login';
+import NoMatch from './containers/NoMatch';
+import { isLoaded as isAuthLoaded, auth as doAuth } from './redux/modules/auth';
+import { reset } from './ajax/ajax';
+import Report from './modules/report/RptElectList/RptElectList';
 
 export default Module => {
   const routes = [{
@@ -25,6 +26,26 @@ export default Module => {
       require('./modules/devicesstu/OnOffStu/index'),
       require('./modules/devicesstu/MonStu/index'),
       require('./modules/devicesstu/ReacStu/index'),
+      require('./modules/devicesstu/LightStu/index'),
+      require('./modules/devicesstu/CameraStu/index'),
+      require('./modules/devicesstu/AircondStu/index'),
+      require('./modules/devicesstu/DoorStu/index'),
+      require('./modules/devicesstu/WindowStu/index'),
+      //monit
+      require('./modules/monit/HeatHumiMon/index'),
+      require('./modules/monit/UpsMon/index'),
+      require('./modules/monit/CracMon/index'),
+      require('./modules/monit/PowerMon/index'),
+      require('./modules/monit/WaterMon/index'),
+      //report
+      require('./modules/report/RptElectList/index'),
+      {path: 'rpt-elect-trend',component: Report},
+      {path: 'rpt-water-list',component: Report},
+      {path: 'rpt-water-trend',component: Report},
+      {path: 'rpt-heathumi-analy',component: Report},
+      {path: 'rpt-pm25-analy',component: Report},
+      {path: 'rpt-noise-analy',component: Report},
+      {path: 'rpt-formaldehyde-analy',component: Report},
     ],
     onEnter (nextState, replace, cb) {
       const checkAuth = () => {
@@ -48,10 +69,10 @@ export default Module => {
   }, {
     path: '/login',
     component: Login
-  }, {
+  }/*, {
     path: '*',
     component: NoMatch
-  }]
+  }*/]
 
   return routes
 }

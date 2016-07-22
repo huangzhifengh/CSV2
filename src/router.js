@@ -4,6 +4,7 @@ import NoMatch from './containers/NoMatch';
 import { isLoaded as isAuthLoaded, auth as doAuth } from './redux/modules/auth';
 import { reset } from './ajax/ajax';
 import Report from './modules/report/RptElectList/RptElectList';
+import Home from './modules/report/RptElectList/RptElectList';
 
 export default Module => {
   const routes = [{
@@ -14,6 +15,7 @@ export default Module => {
     },
     childRoutes: [
       //system
+      require('./modules/system/Home/index'),
       require('./modules/system/DeviceType/index'),
       require('./modules/system/Role/index'),
       //job

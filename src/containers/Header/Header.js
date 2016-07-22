@@ -10,7 +10,7 @@ class Header extends Component {
     return (
       <div className="Header">
         <div className="Header-container">
-          <a className="Header-brand" href="#">
+          <a className="Header-brand" href="#home">
             <img className="Header-brandImg" src="images/logo.png" width="35" height="38" alt="lsiot" />
             <span className="Header-brandTxt">砾石物联网管控系统</span>
           </a>

@@ -49,7 +49,7 @@ class Login extends Page {
 
   componentWillReceiveProps (nextProps) {
     if (!this.props.user && nextProps.user) {
-      location.hash = '/'
+      location.hash = '/home'
     } else if (nextProps.loginError) {
       let resp = nextProps.loginError
       $(this.refs.alert).text(resp.name).slideDown('fast', () => {

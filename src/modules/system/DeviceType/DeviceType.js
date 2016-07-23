@@ -26,10 +26,7 @@ class Module extends Page {
         {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true,},
         {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
       ],
-      toolbar: [{
-        name: 'create',
-        text: '新增',
-      }],
+      toolbar: [{name: 'create',text: '新增'}],
       dataSource: dataSource,
       detailInit: data => {
         return {

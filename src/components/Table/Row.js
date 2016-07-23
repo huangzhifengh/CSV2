@@ -36,7 +36,7 @@ class TableRow extends Component {
       {checkable && <Cell><input type="checkbox" /></Cell>}
       {columns.map((config, index) => {
         return !config.columnHidden && 
-          <Cell key={index}>{config.parse ? config.parse(data[config.name], data) : (config.name?data[config.name]:data[index])}</Cell>
+          <Cell key={index}>{config.parse ? config.parse(data[config.name], data) : data[config.name]}</Cell>
       })}
       {!!command.length && <Cell>
         {command.map((item, index) => {

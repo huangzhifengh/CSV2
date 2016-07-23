@@ -1,244 +1,93 @@
-import React, { PropTypes, Component } from 'react'
-import DataTable from '../../../components/DataTable'
-import ajax from '../../../ajax'
-import styles from './SpcStu.css';
-import WithStyles from '../../../decorators/withStyles'
+import React from 'react';
+import Page from 'base-page';
+import Table from 'components/Table';
+import DataSource from 'components/DataSource';
 
-@WithStyles(styles)
-class Module extends Component {
-  constructor () {
-    super()
-    this.tabTitle = '特别关注'
-    this.state1 = {
-      tableConfig: {
-        panelTitle: {
-          title: '灯',
-          toolbar: {}
-        },
-        columns: [{
-          title: '设备名称',
-          name: 'name',
-        }, {
-          title: '区域',
-          name: 'location'
-        }, {
-          title: '当前电量',
-          name: 'aa'
-        }, {
-          title: '日总电量',
-          name: 'bb'
-        }, {
-          title: '月总电量',
-          name: 'cc'
-        }, {
-          title: '电流值',
-          name: 'dd'
-        }, {
-          title: '电压值',
-          name: 'ee'
-        }, {
-          title: '信号强度',
-          name: 'ff'
-        }, {
-          title: '状态',
-          name: 'statu'
-        }, {
-          command: [{
-            name: 'recount',
-            text: '重置'
-          }]
-        }],
-        transport: {
-          read: {
-            url: '/api/devices/statu/list?subType=111111&focus=true',
-            parse: () => {}
-          }
-        },
-        events: {
-          onCommandClick: this._onCommandClick1.bind(this)
-        }
-      }
-    }
+class Module extends Page {
 
-    this.state2 = {
-      tableConfig: {
-        panelTitle: {
-          title: '开关',
-          toolbar: {}
-        },
-        columns: [{
-          title: '设备名称',
-          name: 'name',
-        }, {
-          title: '区域',
-          name: 'location'
-        }, {
-          title: '开/关',
-          name: 'aa'
-        }, {
-          title: '信号强度',
-          name: 'ff'
-        }, {
-          title: '状态',
-          name: 'statu'
-        }, {
-          command: [{
-            name: 'onoff',
-            type: 'switch'
-          }]
-        }],
-        transport: {
-          read: {
-            url: '/api/devices/statu/list?subType=111111&focus=true',
-            parse: () => {}
-          }
-        },
-        events: {
-          onCommandClick: this._onCommandClick2.bind(this)
-        }
-      }
-    }
-
-    this.state3 = {
-      tableConfig: {
-        panelTitle: {
-          title: '空调',
-          toolbar: {}
-        },
-        columns: [{
-          title: '设备名称',
-          name: 'name',
-        }, {
-          title: '区域',
-          name: 'location'
-        }, {
-          title: '当前值',
-          name: 'aa'
-        }, {
-          title: '信号强度',
-          name: 'ff'
-        }, {
-          title: '状态',
-          name: 'statu'
-        }, {
-          command: [{
-            name: 'onoff',
-            text: '关',
-            type: 'switch'
-          }]
-        }],
-        transport: {
-          read: {
-            url: '/api/devices/statu/list?subType=111111&focus=true',
-            parse: () => {}
-          }
-        },
-        events: {
-          onCommandClick: this._onCommandClick3.bind(this)
-        }
-      }
-    }
-
-    this.state4 = {
-      tableConfig: {
-        panelTitle: {
-          title: '计量插座',
-          toolbar: {}
-        },
-        columns: [{
-          title: '设备名称',
-          name: 'name',
-        }, {
-          title: '区域',
-          name: 'location'
-        }, {
-          title: '信号强度',
-          name: 'ff'
-        }, {
-          title: '状态',
-          name: 'statu'
-        }, {
-          command: [{
-            name: 'onoff',
-            text: '关',
-            type: 'switch'
-          }]
-        }],
-        transport: {
-          read: {
-            url: '/api/devices/statu/list?subType=111111&focus=true',
-            parse: () => {}
-          }
-        },
-        events: {
-          onCommandClick: this._onCommandClick4.bind(this)
-        }
-      }
+  getConfig1 () {
+    return {
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=105101'}}),
+      title: '灯',
+      checkable: false,
+      pagination: {show:true,pageSize:10},
+      columns: [
+        {title:'设备名称',name:'name'},
+        {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
+        {title:'当前色温',name:'currentColor',parse:(value,data)=>{return data.deviceStatu.currentColor}},
+        {title:'当前亮度',name:'currentLightness',parse:(value,data)=>{return data.deviceStatu.currentLightness}},
+        {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
+        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+      ]
     }
   }
 
-  static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired,
+  getConfig2 () {
+    return {
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=102101'}}),
+      title: '开关',
+      checkable: false,
+      pagination: {show:true,pageSize:10},
+      columns: [
+        {title:'设备名称',name:'name'},
+        {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
+        {title:'回路',name:'circuit'},
+        {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
+        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+      ]
+    }
+  }
+
+  getConfig3 () {
+    return {
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=106101'}}),
+      title: '空调',
+      checkable: false,
+      pagination: {show:true,pageSize:10},
+      columns: [
+        {title:'设备名称',name:'name'},
+        {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
+        {title:'当前模式',name:'currentModel',parse:(value,data)=>{return data.deviceStatu.currentModel}},
+        {title:'当前温度',name:'currentT',parse:(value,data)=>{return data.deviceStatu.currentT}},
+        {title:'当前风速',name:'currentW',parse:(value,data)=>{return data.deviceStatu.currentW}},
+        {title:'开机时间',name:''},
+        {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
+        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+      ]
+    }
+  }
+
+  getConfig4 () {
+    return {
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=101104'}}),
+      title: '计量插座',
+      checkable: false,
+      pagination: {show:true,pageSize:10},
+      columns: [
+        {title:'设备名称',name:'name'},
+        {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
+        {title:'用电总量(KW/H)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.consumption}return show}},
+        {title:'当前功率(W)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.activePower}return show}},
+        {title:'当前电压(V)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.devV}return show}},
+        {title:'当前电流(A)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.devI}return show}},
+        {title:'漏电告警',name:'',parse:(value,data)=>{let show='正常';if(data.deviceStatu){if(data.deviceStatu.leakage){show='漏电'}}return show}},
+        {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
+        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+      ]
+    }
   }
 
   render() {
-    this.context.onSetTitle(this.tabTitle)
-
     return (
       <div className="container-fluid">
-          <DataTable config={this.state1.tableConfig} />
-          <DataTable config={this.state2.tableConfig} />
-          <DataTable config={this.state3.tableConfig} />
-          <DataTable config={this.state4.tableConfig} />
+        <Table {...this.getConfig1()} />
+        <Table {...this.getConfig2()} />
+        <Table {...this.getConfig3()} />
+        <Table {...this.getConfig4()} />
       </div>
     )
   }
 
-  _devicesOperReq (p) {
-    ajax({
-      url: '/api/devices/oper?terminal='+p.erminal+'&mac='+p.mac+'&oper='+p.oper,
-      data: {},
-      success: resp => {
-        if (resp && 0 === resp.code) {
-          alert("成功");
-        } else {
-          alert("失败");
-        }
-      }
-    })
-  }
- 
-  _onCommandClick1 (type, data, e) {
-    if ('recount' === type) {
-      console.log(type, data, e)
-      this._devicesOperReq({terminal: 'pc',mac: data.id,oper:type})
-      return false
-    }
-  }
-
-  _onCommandClick2 (type, data, e) {
-    if ('onoff' === type) {
-      console.log(type, data, e)
-      this._devicesOperReq({terminal: 'pc',mac: data.id,oper:type})
-      return false
-    }
-  }
-  
-  _onCommandClick3 (type, data, e) {
-    if ('onoff' === type) {
-      console.log(type, data, e)
-      this._devicesOperReq({terminal: 'pc',mac: data.id,oper:type})
-      return false
-    }
-  }
-  
-  _onCommandClick4 (type, data, e) {
-    if ('onoff' === type) {
-      console.log(type, data, e)
-      this._devicesOperReq({terminal: 'pc',mac: data.id,oper:type})
-      return false
-    }
-  }
 }
 
-export default Module;
+module.exports = Module

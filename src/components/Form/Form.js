@@ -38,7 +38,6 @@ class Form extends Component {
     this.elements = [] // reset
     return <form className="form-horizontal">
       {fields.map((config, index) => {
-        console.log(config,index)
         return <Element 
           ref={el => el && this.elements.push(el)}
           key={index} 

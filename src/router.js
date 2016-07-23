@@ -4,7 +4,6 @@ import NoMatch from './containers/NoMatch';
 import { isLoaded as isAuthLoaded, auth as doAuth } from './redux/modules/auth';
 import { reset } from './ajax/ajax';
 import Report from './modules/report/RptElectList/RptElectList';
-import Home from './modules/report/RptElectList/RptElectList';
 
 export default Module => {
   const routes = [{
@@ -14,16 +13,22 @@ export default Module => {
       reset()
     },
     childRoutes: [
+      require('./containers/Home'),
       //system
-      require('./modules/system/Home/index'),
-      require('./modules/system/DeviceType/index'),
+      require('./modules/system/Resources/index'),
       require('./modules/system/Role/index'),
+      require('./modules/system/User/index'),
+      require('./modules/system/DeviceType/index'),
+      require('./modules/system/Device/index'),
+      require('./modules/system/GateWay/index'),
+      require('./modules/system/Exec/index'),
       //job
       //require('./modules/job'),
       require('./modules/job/Job/index'),
       //linkCtrl
       require('./modules/linkctrl/LinkCtrl/index'),
       //devicesstu
+      require('./modules/devicesstu/SpcStu/index'),
       require('./modules/devicesstu/MeasStu/index'),
       require('./modules/devicesstu/OnOffStu/index'),
       require('./modules/devicesstu/MonStu/index'),
@@ -71,7 +76,7 @@ export default Module => {
   }, {
     path: '/login',
     component: Login
-  }/*, {
+  }, /*{
     path: '*',
     component: NoMatch
   }*/]

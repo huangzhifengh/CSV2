@@ -15,27 +15,26 @@ class Module extends Page {
         requestStart: (type, data) => {
           return true;
         } 
-      },
+      }
     })
 
     return {
-      title: '设备类型',
+      title: '应用类型',
+      checkable: false,
+      toolbar: [{name: 'create',text: '新增'}],
+      dataSource: dataSource,
       columns: [
         {title:'名称',name:'name'},
-        {title:'代码',name:'code'},
         {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true,},
         {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
       ],
-      toolbar: [{name: 'create',text: '新增'}],
-      dataSource: dataSource,
       detailInit: data => {
         return {
+          autoRead: false,
           columns: [
             {title:'名称',name:'name'},
-            {title:'代码',name:'code'},
-            {title:'全码',name:'allCode',createHidden:true,editHidden:true},
+            {title:'应用类型',name:'code'},
             {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true},
-            {title:'描述',name:'des'},
             {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
           ],
           dataSource: {
@@ -62,10 +61,43 @@ class Module extends Page {
               }
             }
           },
-          autoRead: false,
+          detailInit: data => {
+            return {
+              autoRead: false,
+              columns: [
+                {title:'名称',name:'name'},
+                {title:'设备编号',name:'allCode',createHidden:true,editHidden:true},
+                {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true},
+                {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
+              ],
+              dataSource: {
+                data: data.children,
+                transport: {
+                  detail: data => ({
+                    url: '/api/dervicesType/findById',
+                    data: {
+                      id: data.id
+                    }
+                  }),
+                  create: '/api/dervicesType/add',
+                  update: '/api/dervicesType/edit',
+                  destroy: data => ({
+                    url: '/api/dervicesType/del',
+                    data: {
+                      ids: data.id
+                    }
+                  }),
+                },
+                requestEnd: (type, resp) => {
+                  if ('read' !== type && resp) {
+                    dataSource.sync()
+                  }
+                }
+              }
+            }
+          }
         }
-      },
-      checkable: false,
+      }
     }
   }
 

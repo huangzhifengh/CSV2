@@ -18,10 +18,9 @@ class Module extends Page {
       checkable: false,
       toolbar: [{name: 'create',text: '新增'}],
       columns: [
-        {title:'设备大类',name:'type',createHidden:true,editHidden:true},
-        {title:'设备小类',name:'subType',createHidden:true,editHidden:true},
+        {title:'设备名称',name:'name'},
         {title:'设备MAC',name:'macAdd'},
-        {title:'设备类型',name:'devicesTypeId',type:'select',content:'tree',valueField:'id',labelField:'name',value:'name',data:'/api/dervicesType/tree',columnHidden:true},
+        {title:'应用类型',name:'devicesTypeId',type:'select',content:'tree',valueField:'id',labelField:'name',value:'name',data:'/api/dervicesType/tree',columnHidden:true},
         {title:'硬件类型',name:'hardwareType',type:'select',valueField:'id',labelField:'name',value:'name',columnHidden:true,
           data:[
             {id:'0',name:'灯'},
@@ -38,7 +37,6 @@ class Module extends Page {
             {id:'11',name:'光感'}
           ]
         },
-        {title:'设备名称',name:'name'},
         {title:'回路',name:'circuit',value:1},
         {title:'位置',name:'locationId',type:'select',content:'tree',valueField:'id',labelField:'name',value:'name',data:'/api/location/tree',columnHidden:true},
         {title:'一级域',name:'location1',createHidden:true,editHidden:true},

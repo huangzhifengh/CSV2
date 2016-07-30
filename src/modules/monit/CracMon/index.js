@@ -4,5 +4,12 @@ module.exports = {
     require.ensure([], require => {
       cb(null, require('./CracMon'))
     })
+  },
+  getChildRoutes (location, cb) {
+    require.ensure([], require => {
+      cb(null, [
+        require('./Detail/index')
+      ])
+    })
   }
 }

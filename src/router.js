@@ -20,6 +20,7 @@ export default Module => {
       require('./modules/system/User/index'),
       require('./modules/system/DeviceType/index'),
       require('./modules/system/Device/index'),
+      require('./modules/system/Local/index'),
       require('./modules/system/GateWay/index'),
       require('./modules/system/Exec/index'),
       //job
@@ -44,6 +45,7 @@ export default Module => {
       require('./modules/monit/CracMon/index'),
       require('./modules/monit/PowerMon/index'),
       require('./modules/monit/WaterMon/index'),
+      require('./modules/monit/Wind/index'),
       //report
       require('./modules/report/RptElectList/index'),
       {path: 'rpt-elect-trend',component: Report},

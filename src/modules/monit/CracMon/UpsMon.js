@@ -5,21 +5,10 @@ import DataSource from 'components/DataSource';
 
 class Module extends Page {
 
-  constructor (props) {
-    super(props)
-
-    this.dataSource = new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}});
-
-  }
-
-  componentDidMount (){
-    
-  }
-
   getConfig1 () {
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}}),
-      title: 'UPS',
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=205101'}}),
+      title: '精密空调',
       checkable: false,
       pagination: {show:true,pageSize:10},
       columns: [
@@ -36,11 +25,6 @@ class Module extends Page {
   }
 
   render() {
-    this.dataSource.read(null,function(resp){
-      console.log(1);
-    });
-    console.log(2);
-    //console.log(this)
     return this.props.children || (
       <div className="container-fluid">
         <Table {...this.getConfig1()} />

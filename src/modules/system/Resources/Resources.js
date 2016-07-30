@@ -19,10 +19,9 @@ class Module extends Page {
     })
 
     return {
-      title: '设备类型',
+      title: '菜单管理',
       columns: [
         {title:'名称',name:'operationName'},
-        {title:'编码',name:'operationCode'},
         {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'text',data:'/api/resources/tree?resourcesType=ALL',columnHidden:true},
         {title:'URL',name:'operationUrl'},
         {title:'图标',name:'bk2'},
@@ -35,7 +34,6 @@ class Module extends Page {
         return {
           columns: [
             {title:'名称',name:'operationName'},
-            {title:'编码',name:'operationCode'},
             {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'text',data:'/api/resources/tree?resourcesType=ALL',columnHidden:true},
             {title:'URL',name:'operationUrl'},
             {title:'图标',name:'bk2'},

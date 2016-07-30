@@ -7,7 +7,7 @@ class Module extends Page {
 
   getConfig1 () {
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=105101'}}),
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=105101&focus=true'}}),
       title: '灯',
       checkable: false,
       pagination: {show:true,pageSize:10},
@@ -24,7 +24,7 @@ class Module extends Page {
 
   getConfig2 () {
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=102101'}}),
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=102101&focus=true'}}),
       title: '开关',
       checkable: false,
       pagination: {show:true,pageSize:10},
@@ -40,7 +40,7 @@ class Module extends Page {
 
   getConfig3 () {
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=106101'}}),
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=106101&focus=true'}}),
       title: '空调',
       checkable: false,
       pagination: {show:true,pageSize:10},
@@ -59,7 +59,7 @@ class Module extends Page {
 
   getConfig4 () {
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=101104'}}),
+      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=101104&focus=true'}}),
       title: '计量插座',
       checkable: false,
       pagination: {show:true,pageSize:10},

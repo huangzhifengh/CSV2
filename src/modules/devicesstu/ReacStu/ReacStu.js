@@ -96,7 +96,8 @@ class Module extends Page {
             click: (data) => {
               data.jobStatu = 1;
               this.setStatu(data,'/api/job/edit',dataSource);
-            }},
+            }
+          },
           {name:'ESTFire',text:'火警'},
           {name:'ESTEmergency',text:'紧急事件'},
           {name:'ESTArmed',text:'布防'},

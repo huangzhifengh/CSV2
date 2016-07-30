@@ -17,5 +17,11 @@ export default {
     targetPort: 1919,
     prefix: '/lsiot',
     pattern: '**/api/**',
-  }
+  },
+  socket: {
+    protocal: 'ws',
+    target: '115.236.175.217',//115.236.175.217
+    targetPort: 1919,
+    prefix: '/lsiot/websocket',
+  },
 }

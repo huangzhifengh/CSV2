@@ -91,6 +91,10 @@ class Table extends Component {
     }
   }
 
+  componentWillUnmount () {
+    this.dataSource.removeListeners()
+  }
+
 }
 
 export default Table 

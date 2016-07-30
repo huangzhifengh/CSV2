@@ -116,6 +116,8 @@ class DataSource {
   setRefreshHook (hook) {
     this.refreshHook = hook 
   }
+
+  removeListeners () {}
   /***APIs end***/
 
 }

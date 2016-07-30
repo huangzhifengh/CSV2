@@ -12,9 +12,6 @@ class Module extends Page {
         create: '/api/resources/add',
         update: '/api/resources/edit',
         destroy: '/api/resources/del',
-        requestStart: (type, data) => {
-          return true;
-        } 
       },
     })
 
@@ -43,12 +40,6 @@ class Module extends Page {
           dataSource: {
             data: data.children,
             transport: {
-              detail: data => ({
-                url: '/api/resources/findById',
-                data: {
-                  id: data.id
-                }
-              }),
               create: '/api/resources/add',
               update: '/api/resources/edit',
               destroy: data => ({

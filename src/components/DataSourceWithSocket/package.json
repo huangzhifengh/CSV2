@@ -1,0 +1,4 @@
+{
+  "name": "DataSourceWithSocket",
+  "main": "./DataSourceWithSocket.js"
+}

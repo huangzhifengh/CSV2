@@ -20,7 +20,7 @@ class Module extends Page {
       name: "soundId",
       value: "name",
       labelField: "name",
-      valueField: "soundId",
+      valueField: "id",
       data: "/api/link/ctrl/device?subType=104105"
     }
     let props6 = {

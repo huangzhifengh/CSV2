@@ -7,6 +7,8 @@ class Module extends Page {
 
   componentDidMount (){
     this._setDefaultChecked(this.props.params.id);
+
+    console.log(this.props.params.id)
   }
 
   render() {

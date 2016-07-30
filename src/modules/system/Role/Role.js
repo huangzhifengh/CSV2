@@ -30,7 +30,7 @@ class Module extends Page {
           command: [
             {name:'update',text:'编辑'},
             {name:'destroy',text:'删除'},
-            {name:'resConfig',text:'资源配置',click:(data)=>{window.location.href='#role/resconf/id='+data.id}}
+            {name:'resConfig',text:'资源配置',click:(data)=>{window.location.href='#role/resconf/'+data.id}}
           ]
         }
       ]

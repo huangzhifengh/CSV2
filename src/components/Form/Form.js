@@ -62,7 +62,7 @@ class Form extends Component {
     field && (
       (
         (
-          isDefault && _.isUndefined(this.formData[field])
+          isDefault && _.isUndefined(this._data_[field])
         ) || !isDefault
       ) && (this._data_[field] = value)
     )

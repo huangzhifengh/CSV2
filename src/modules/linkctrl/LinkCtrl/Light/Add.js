@@ -9,27 +9,27 @@ class Module extends Page {
         type: "select", 
         title: "人体热释",
         name: "personId",
-        value: "name",
+        //value: "name",
         labelField: "name",
-        valueField: "personId",
+        valueField: "id",
         data: "/api/link/ctrl/device?subType=104102"
     }
     let props2 = {
         type: "select", 
         title: "光感设备",
         name: "rayId",
-        value: "name",
+        //value: "name",
         labelField: "name",
-        valueField: "rayId",
+        valueField: "id",
         data: "/api/link/ctrl/device?subType=103103"
     }
     let props3 = {
         type: "select", 
         title: "灯",
         name: "linghtId",
-        value: "name",
+        //value: "name",
         labelField: "name",
-        valueField: "linghtId",
+        valueField: "id",
         data: "/api/link/ctrl/device?subType=105101"
     }
 

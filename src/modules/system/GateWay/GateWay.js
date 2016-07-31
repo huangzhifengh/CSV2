@@ -20,7 +20,7 @@ class Module extends Page {
       columns: [
         {title:'网关IP',name:'ip'},
         {title:'网关名称',name:'name'},
-        {title:'位置',name:'locationId',type:'select',content:'tree',valueField:'id',labelField:'name',value:'name',data:'/api/location/tree',columnHidden:true},
+        {title:'位置',name:'locationId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/location/tree',columnHidden:true},
         {title:'一级域',name:'location1',createHidden:true,editHidden:true},
         {title:'二级域',name:'location2',createHidden:true,editHidden:true},
         {title:'三级域',name:'location3',createHidden:true,editHidden:true},

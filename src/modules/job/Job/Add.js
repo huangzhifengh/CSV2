@@ -48,7 +48,7 @@ class Module extends Page {
       type: "select", 
       title: "执行指令",
       name: "jobInstruct",
-      value: "text",
+      //value: "text",
       labelField: "text",
       valueField: "id",
       data: [{id:'0',text:'开灯'},{id:'1',text:'关灯'}]
@@ -57,7 +57,7 @@ class Module extends Page {
       type: "select", 
       title: "任务类型",
       name: "jobType",
-      value: "text",
+      //value: "text",
       labelField: "text",
       valueField: "id",
       data: [{id:'0',text:'执行一次'},{id:'1',text:'重复执行'}]
@@ -77,7 +77,7 @@ class Module extends Page {
             <form id="alertForm" className="form-horizontal">
               <div className="row form-group">
                 <div className="col-md-1"><label className="control-label">任务名称</label></div>
-                <div className="col-md-3"><input type="text" className="form-control" name="name"/></div>
+                <div className="col-md-3"><input type="text" className="form-control" name="jobName"/></div>
 
                 <div className="col-md-1"><label className="control-label">执行指令</label></div>
                 <div className="col-md-3"><SelectBox {...props1} /></div>
@@ -88,10 +88,10 @@ class Module extends Page {
 
               <div className="row form-group">
                 <div className="col-md-1"><label className="control-label">日期</label></div>
-                <div className="col-md-3"><input type="text" className="form-control" name="name"/></div>
+                <div className="col-md-3"><input type="text" className="form-control" name="jobDate"/></div>
 
                 <div className="col-md-1"><label className="control-label">时间</label></div>
-                <div className="col-md-3"><input type="text" className="form-control" name="name"/></div>
+                <div className="col-md-3"><input type="text" className="form-control" name="jobTime"/></div>
               </div>
 
               <div className="row form-group">
@@ -109,7 +109,7 @@ class Module extends Page {
 
               <div className="row form-group">
                 <div className="col-md-1"><label className="control-label">描述</label></div>
-                <div className="col-md-3"><input type="text" className="form-control" name="name"/></div>
+                <div className="col-md-3"><input type="text" className="form-control" name="jobDesc"/></div>
               </div>
             </form>
 

@@ -8,17 +8,31 @@ class Module extends Page {
   constructor (props) {
     super(props)
 
-    this.dataSource = new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}});
-
+    this.state = {
+      data: [],
+      loaded: false,
+    }
   }
 
   componentDidMount (){
-    
+    let dataSource = new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}});
+    dataSource.read();
+    console.log(dataSource,dataSource.data,dataSource.idField);
+    this.setDataSource(dataSource.data);
+  }
+
+  setDataSource (data) {
+    this.setState({
+      data: data,
+      loaded: true
+    });
   }
 
   getConfig1 () {
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}}),
+      dataSource: {
+        data: this.state.data,
+      },
       title: 'UPS',
       checkable: false,
       pagination: {show:true,pageSize:10},
@@ -28,7 +42,7 @@ class Module extends Page {
         {title:'状态',name:'devSelfStatus',parse:(value,data)=>{return '正常'}},
         {command:[{name:'show',text:'详情',
           click: (data) => {
-            window.location.href='#ups/detail/id='+data.id
+            window.location.href='#ups/detail/'+data.id
           }
         }]}
       ]
@@ -36,10 +50,6 @@ class Module extends Page {
   }
 
   render() {
-    this.dataSource.read(null,function(resp){
-      console.log(1);
-    });
-    console.log(2);
     //console.log(this)
     return this.props.children || (
       <div className="container-fluid">

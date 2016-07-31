@@ -39,12 +39,6 @@ class Module extends Page {
           dataSource: {
             data: data.children,
             transport: {
-              detail: data => ({
-                url: '/api/location/findById',
-                data: {
-                  id: data.id
-                }
-              }),
               create: '/api/location/add',
               update: '/api/location/edit',
               destroy: data => ({
@@ -71,12 +65,6 @@ class Module extends Page {
               dataSource: {
                 data: data.children,
                 transport: {
-                  detail: data => ({
-                    url: '/api/location/findById',
-                    data: {
-                      id: data.id
-                    }
-                  }),
                   create: '/api/location/add',
                   update: '/api/location/edit',
                   destroy: data => ({

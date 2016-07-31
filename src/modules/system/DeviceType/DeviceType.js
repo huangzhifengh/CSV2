@@ -25,6 +25,8 @@ class Module extends Page {
       dataSource: dataSource,
       columns: [
         {title:'名称',name:'name'},
+        {title:'应用类型',name:'code',columnHidden:true},
+        {title:'设备编号',name:'allCode',columnHidden:true},
         {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true,},
         {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
       ],
@@ -34,18 +36,13 @@ class Module extends Page {
           columns: [
             {title:'名称',name:'name'},
             {title:'应用类型',name:'code'},
+            {title:'设备编号',name:'allCode',columnHidden:true},
             {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true},
             {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
           ],
           dataSource: {
             data: data.children,
             transport: {
-              detail: data => ({
-                url: '/api/dervicesType/findById',
-                data: {
-                  id: data.id
-                }
-              }),
               create: '/api/dervicesType/add',
               update: '/api/dervicesType/edit',
               destroy: data => ({
@@ -66,19 +63,14 @@ class Module extends Page {
               autoRead: false,
               columns: [
                 {title:'名称',name:'name'},
-                {title:'设备编号',name:'allCode',createHidden:true,editHidden:true},
+                {title:'应用类型',name:'code',columnHidden:true},
+                {title:'设备编号',name:'allCode'},
                 {title:'上级节点',name:'parentId',type:'select',content:'tree',valueField:'id',labelField:'name',data:'/api/dervicesType/tree',columnHidden:true},
                 {command:[{name:'update',text:'编辑'},{name:'destroy',text:'删除'}]}
               ],
               dataSource: {
                 data: data.children,
                 transport: {
-                  detail: data => ({
-                    url: '/api/dervicesType/findById',
-                    data: {
-                      id: data.id
-                    }
-                  }),
                   create: '/api/dervicesType/add',
                   update: '/api/dervicesType/edit',
                   destroy: data => ({

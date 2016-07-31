@@ -9,16 +9,16 @@ class Module extends Page {
 	    type: "select", 
 	    title: "烟感",
 	    name: "smogId",
-	    value: "name",
+	    //value: "name",
       labelField: "name",
-      valueField: "smogId",
+      valueField: "id",
 	    data: "/api/link/ctrl/device?subType=104101"
     }
     let props5 = {
       type: "select", 
       title: "声光报警",
       name: "soundId",
-      value: "name",
+      //value: "name",
       labelField: "name",
       valueField: "id",
       data: "/api/link/ctrl/device?subType=104105"
@@ -27,7 +27,7 @@ class Module extends Page {
       type: "select", 
       title: "烟类型",
       name: "smogType",
-      value: "name",
+      //value: "name",
       labelField: "name",
       valueField: "id",
       data: [
@@ -41,7 +41,7 @@ class Module extends Page {
       type: "select", 
       title: "声音",
       name: "soundType",
-      value: "name",
+      //value: "name",
       labelField: "name",
       valueField: "id",
       data: [
@@ -109,7 +109,7 @@ class Module extends Page {
     fields.map(field => {
       formData[field.name] = field.value
     })
-    console.log(formData)
+    //console.log(formData)
     ajax({
       type: 'POST',
       url: '/api/link/ctrl/alert/add',

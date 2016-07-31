@@ -18,10 +18,8 @@ class Module extends Page {
       checkable: false,
       toolbar: [{name: 'export',text: '导出'}],
       columns: [
-        {title:'设备大类',name:'type'},
-        {title:'设备小类',name:'subType'},
-        {title:'设备MAC',name:'macAdd'},
         {title:'设备名称',name:'name'},
+        {title:'设备MAC',name:'macAdd'},
         {title:'回路',name:'circuit'},
         {title:'一级域',name:'location1'},
         {title:'二级域',name:'location2'},

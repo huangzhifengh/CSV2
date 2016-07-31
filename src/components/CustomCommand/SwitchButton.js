@@ -6,14 +6,16 @@ import withStyles from 'with-style'
 class SwitchButton extends Component {
 
   static propTypes = {
-    config: React.PropTypes.object.isRequired,
-    onClick: React.PropTypes.func
+    name: PropTypes.string,
+    checked: PropTypes.bool,
+    onClick: PropTypes.func
   }
 
   render () {
-    /*<Toggle defaultToggled={true}/>*/
+    let { name, checked, onClick} = this.props
+
     return (<label className="switch-btn">
-      <input type="checkbox" name={this.props.config.name} className="ios-switch green tinyswitch" defaultChecked={false} onChange={this.props.onClick}/>
+      <input type="checkbox" name={name} className="ios-switch green tinyswitch" defaultChecked={checked} onChange={onClick}/>
       <div>
         <div></div>
       </div>

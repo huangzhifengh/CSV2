@@ -17,7 +17,7 @@ class Module extends Page {
         {title:'当前色温',name:'currentColor',parse:(value,data)=>{return data.deviceStatu.currentColor}},
         {title:'当前亮度',name:'currentLightness',parse:(value,data)=>{return data.deviceStatu.currentLightness}},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[{title:'开关',name:'onoff',type:'switch', checked: true,}, {type: 'heartBtn', name: 'start', checked: true,}]}
       ]
     }
   }

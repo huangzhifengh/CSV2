@@ -12,17 +12,12 @@ class CustomCommand extends Component {
 
     let { onClick, type, text } = this.props
 
-    let props = {
-      onClick: onClick,
-      ...this.props,
-    }
-
     switch (type) {
       case 'switch':
-        return <SwitchButton {...props} />
+        return <SwitchButton {...this.props} />
         break
       case 'heartBtn':
-        return <HeartButton {...props} />
+        return <HeartButton {...this.props} />
         break
       default:
         return <a className="btn btn-link btn-xs" onClick={onClick}>{text}</a> 

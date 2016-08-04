@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from 'base-page';
 import Table from 'components/Table';
-import DataSource from 'components/DataSource';
+import DataSource from 'components/DataSourceWithSocket';
 
 class Module extends Page {
 
@@ -75,7 +75,13 @@ class Module extends Page {
         {title:'当前电流(A)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.devI}return show}},
         {title:'漏电告警',name:'',parse:(value,data)=>{let show='正常';if(data.deviceStatu){if(data.deviceStatu.leakage){show='漏电'}}return show}},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setOnOff(data,e,dataSource);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -91,6 +97,24 @@ class Module extends Page {
     )
   }
 
+  _setOnOff (data,e,dataSource) {
+    let api = "SetLightOff";
+    if(!!e.target.checked){
+      api = "SetLightOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
+  }
+  
 }
 
 module.exports = Module

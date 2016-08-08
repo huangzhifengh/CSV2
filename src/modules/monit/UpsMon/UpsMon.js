@@ -16,9 +16,9 @@ class Module extends Page {
 
   componentDidMount (){
     let dataSource = new DataSource({transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}});
-    dataSource.read();
-    console.log(dataSource,dataSource.data,dataSource.idField);
-    this.setDataSource(dataSource.data);
+    //dataSource.read();
+    //console.log(dataSource,dataSource.data,dataSource.idField);
+    //this.setDataSource(dataSource.data);
   }
 
   setDataSource (data) {
@@ -31,7 +31,7 @@ class Module extends Page {
   getConfig1 () {
     return {
       dataSource: {
-        data: this.state.data,
+        transport:{read:'/api/devices/statu/funRoomMon/list?subType=202101'}
       },
       title: 'UPS',
       checkable: false,

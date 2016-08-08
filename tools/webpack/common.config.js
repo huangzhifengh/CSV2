@@ -76,10 +76,10 @@ export default (DEBUG, VERBOSE) => {
           ]
         }, {
           test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'url-loader?name=font/[name].[ext]&limit=5000', // small than 5kb
+          loader: 'url-loader?limit=5000', // small than 5kb
         }, {
           test: /\.(eot|ttf|wav|mp3)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'file-loader?name=font/[name].[ext]',
+          loader: 'file-loader',
         }
       ]
     },

@@ -62,6 +62,19 @@ class Module extends Page {
       valueField: "id",
       data: [{id:'0',text:'执行一次'},{id:'1',text:'重复执行'}]
     }
+
+    var DateTimeField = require('react-bootstrap-datetimepicker');
+    let dataConfig = {
+      inputProps: {name: "jobDate"},
+      mode: 'date',
+      inputFormat: "YYYY-MM-DD"
+    }
+    let timeConfig = {
+      inputProps: {name: "jobTime"},
+      mode: 'time',
+      inputFormat: "HH:mm:ss"
+    }
+
     return (
       <div className="container-fluid">
         <div style={{margin: '8px'}}>
@@ -88,10 +101,10 @@ class Module extends Page {
 
               <div className="row form-group">
                 <div className="col-md-1"><label className="control-label">日期</label></div>
-                <div className="col-md-3"><input type="text" className="form-control" name="jobDate"/></div>
+                <div className="col-md-3"><DateTimeField {...dataConfig} /></div>
 
                 <div className="col-md-1"><label className="control-label">时间</label></div>
-                <div className="col-md-3"><input type="text" className="form-control" name="jobTime"/></div>
+                <div className="col-md-3"><DateTimeField {...timeConfig} /></div>
               </div>
 
               <div className="row form-group">

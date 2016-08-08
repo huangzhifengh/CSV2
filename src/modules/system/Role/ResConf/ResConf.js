@@ -17,7 +17,7 @@ class Module extends Page {
         <div className="panel panel-default">
           <div className="panel-heading">角色管理-资源配置</div>
           <div id='resConfig'>
-            <TreeLikeUI data={'/api/resources/tree?resourcesType=ALL'} type='tree' checkable={true} nolink={true} />
+            <TreeLikeUI data={'/api/resources/tree?resourcesType=ALL'} type='tree' checkable={true} checkStatusField="checked" nolink={true} />
           </div>
           <button id="resConf" type="button" className="btn btn-default btn-sm" onClick={this._onSubmit.bind(this)}>提交</button>
         </div>

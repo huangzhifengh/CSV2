@@ -62,17 +62,8 @@ class TreeLikeUI extends Component {
   _onDataRetrieved (nodes) {
     let treeNodes = []
     if (nodes.length) {
-      let props = {
-        nolink: this.props.nolink,
-        checkable: this.props.checkable,
-        textField: this.props.textField,
-        onCKBClick: this._onCKBClick.bind(this),
-        onItemClick: this.props.onItemClick,
-        type: this.props.type
-      }
-
       nodes.forEach((item, index) => {
-        treeNodes.push(<TreeNode {...props} data={item} key={item.id} />)
+        treeNodes.push(<TreeNode {...this.props} onCKBClick={this._onCKBClick.bind(this)} data={item} key={item.id} />)
       })
     } else {
       treeNodes.push(<li key="1" className="text-center">空空</li>)

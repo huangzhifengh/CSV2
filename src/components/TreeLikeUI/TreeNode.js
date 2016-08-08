@@ -29,22 +29,22 @@ class MenuItem extends Component {
   }
 
   render() {
-    let item = this.props.data
-    let hasSub = !!item.children.length
-    let {data, ...other} = this.props
-    let isMenu = 'menu' === this.props.type
+    let { data, ...other } = this.props
+    let { type, checkable, checkStatusField } = other
+    let hasSub = !!data.children.length
+    let isMenu = 'menu' === type
 
     return (
       <li className={cx({'master-node': hasSub})} onClick={this._subTreeToggle}>
-        <a href={(hasSub || this.props.nolink) ? 'javascript: void 0;' : ('#' + (item.src || ''))} data-id={item.id}>
-          {!this.props.level && isMenu && item.iconCls && <span className={`glyphicon glyphicon-${item.iconCls}`}></span>}
+        <a href={(hasSub || this.props.nolink) ? 'javascript: void 0;' : ('#' + (data.src || ''))} data-id={data.id}>
+          {!this.props.level && isMenu && data.iconCls && <span className={`glyphicon glyphicon-${data.iconCls}`}></span>}
           {this._getMenuIndent()}
           {!isMenu && hasSub && <span className='icon glyphicon glyphicon-triangle-right'></span>}
-          {this.props.checkable && <input type="checkbox" className={cx({'tree-node-ckb': true, 'master-node-ckb': hasSub, 'sub-node-ckb': this.props.level})} data-id={item.id} onClick={this.props.onCKBClick} />}
-          <span className='menu-text' onClick={this._onSelected.bind(this)}>{item[this.props.textField || 'text']}</span>
+          {this.props.checkable && <input checked={checkStatusField && (!!data[checkStatusField])} type="checkbox" className={cx({'tree-node-ckb': true, 'master-node-ckb': hasSub, 'sub-node-ckb': this.props.level})} data-id={data.id} onClick={this.props.onCKBClick} />}
+          <span className='menu-text' onClick={this._onSelected.bind(this)}>{data[this.props.textField || 'text']}</span>
           {isMenu && hasSub && <span className="icon glyphicon glyphicon-menu-right pull-right"></span>}
         </a>
-        {hasSub && <SubMenu {...other} level={this.props.level ? (this.props.level + 1) : 1} list={item.children} />}
+        {hasSub && <SubMenu {...other} level={this.props.level ? (this.props.level + 1) : 1} list={data.children} />}
       </li>
     )
   }

@@ -76,7 +76,7 @@ class Table extends Component {
 
   onCommandClick (command, data, e) {
     this.dataSource.setActiveData(data)
-    if (command.click) command.click(data)
+    if (command.click) command.click(data,e)
     else if (_(this.builtInCommands).indexOf(command.name) !== -1) {
       let props = {
         type: command.name,

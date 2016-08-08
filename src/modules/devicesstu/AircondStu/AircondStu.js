@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from 'base-page';
 import Table from 'components/Table';
-import DataSource from 'components/DataSource';
+import DataSource from 'components/DataSourceWithSocket';
 
 class Module extends Page {
 
@@ -19,7 +19,13 @@ class Module extends Page {
         {title:'当前风速',name:'currentW',parse:(value,data)=>{return data.deviceStatu.currentW}},
         {title:'开机时间',name:''},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setOnOff(data,e,dataSource);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -32,6 +38,25 @@ class Module extends Page {
     )
   }
 
+  _setOnOff (data,e,dataSource) {
+    alert("失败");
+    return false;
+    let api = "SetLightOff";
+    if(!!e.target.checked){
+      api = "SetLightOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
+  }
 }
 
 module.exports = Module

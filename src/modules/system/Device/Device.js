@@ -6,13 +6,15 @@ import DataSource from 'components/DataSource'
 class Module extends Page {
 
   getConfig1 () {
+    let dataSource = new DataSource({transport:{
+      read:'/api/dervices/list',
+      create: '/api/dervices/add',
+      update: '/api/dervices/edit',
+      destroy: '/api/dervices/del'
+    }});
+    
     return {
-      dataSource: new DataSource({transport:{
-        read:'/api/dervices/list',
-        create: '/api/dervices/add',
-        update: '/api/dervices/edit',
-        destroy: '/api/dervices/del'
-      }}),
+      dataSource: dataSource,
       title: '设备管理',
       pagination: {show:true,pageSize:10},
       checkable: false,
@@ -45,6 +47,23 @@ class Module extends Page {
         {title:'描述',name:'des'},
         {
           command:[
+            {name: 'focus',type: 'heartBtn',text: '关注',
+              click: (data,e) => {
+                data.focus = e.target.checked;
+                ajax({
+                  url: '/api/dervices/edit',
+                  data: data,
+                  success: resp => {
+                    if (resp && 0 === resp.code) {
+                      dataSource.sync(data);
+                      //alert("成功");
+                    } else {
+                      alert("失败");
+                    }
+                  }
+                })
+              }
+            },
             //{name:'focus',text:'关注',type:'heartBtn',valueField:'focus'},
             {name:'update',text:'编辑'},
             {name:'destroy',text:'删除'},
@@ -60,24 +79,6 @@ class Module extends Page {
         <Table {...this.getConfig1()} />
       </div>
     )
-  }
-
-  _onCommandClick (type, data, e) {
-    if ('focus' === type) {
-      data.focus = e.target.checked;
-      ajax({
-        url: '/api/dervices/edit',
-        data: data,
-        success: resp => {
-          if (resp && 0 === resp.code) {
-            alert("成功");
-          } else {
-            alert("失败");
-          }
-        }
-      })
-      return false
-    }
   }
 
 }

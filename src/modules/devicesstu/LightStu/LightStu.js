@@ -6,8 +6,9 @@ import DataSource from 'components/DataSourceWithSocket';
 class Module extends Page {
 
   getConfig1 () {
+    let dataSource = new DataSource({transport:{read:'/api/devices/statu/list?subType=105101'}});
     return {
-      dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=105101'}}),
+      dataSource: dataSource,
       title: '灯',
       checkable: false,
       pagination: {show:true,pageSize:10},
@@ -17,7 +18,13 @@ class Module extends Page {
         {title:'当前色温',name:'currentColor',parse:(value,data)=>{return data.deviceStatu.currentColor}},
         {title:'当前亮度',name:'currentLightness',parse:(value,data)=>{return data.deviceStatu.currentLightness}},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        {command:[{title:'开关',name:'onoff',type:'switch', checked: true,}, {type: 'heartBtn', name: 'start', checked: true,}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setOnOff(data,e,dataSource);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -28,6 +35,24 @@ class Module extends Page {
         <Table {...this.getConfig1()} />
       </div>
     )
+  }
+
+  _setOnOff (data,e,dataSource) {
+    let api = "SetLightOff";
+    if(!!e.target.checked){
+      api = "SetLightOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
   }
 
 }

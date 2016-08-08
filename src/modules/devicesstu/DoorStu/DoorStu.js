@@ -1,14 +1,14 @@
 import React from 'react';
 import Page from 'base-page';
 import Table from 'components/Table';
-import DataSource from 'components/DataSource';
+import DataSource from 'components/DataSourceWithSocket';
 
 class Module extends Page {
 
   getConfig1 () {
     return {
       dataSource: new DataSource({transport:{read:'/api/devices/statu/list?subType=107101'}}),
-      title: '门',
+      title: '门磁',
       checkable: false,
       pagination: {show:true,pageSize:10},
       columns: [

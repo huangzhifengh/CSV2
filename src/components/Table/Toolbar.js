@@ -6,7 +6,7 @@ class Toolbar extends Component {
     let { title, buttons } = this.props
 
     return (title || buttons.lenth ) ? <div className="toolbar">
-    <a className="btn btn-link title">{title || 'Title'}</a>
+    <a className="btn btn-link title" title={`这个表格展示'${title || 'Title'}'相关的信息`}>{title || 'Title'}</a>
     {buttons.map((item, index) => {
       return <a key={index} className="btn btn-default btn-sm" onClick={this.props.onClick.bind(this, item, null)}>
         {item.icon && <span className={`glyphicon glyphicon-${item.icon}`}></span>}

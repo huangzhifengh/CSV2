@@ -24,7 +24,7 @@ class Module extends Page {
         {title:'手机号码',name:'phone'},
         {title:'邮箱',name:'email'},
         {title:'描述',name:'des'},
-        //{title:'角色',name:'roleIds',value:'roleDesc',type:'option',data:'/api/role/list',columnHidden:true},
+        {title:'角色',name:'roleIds',value:'roleDesc',type:'option',data:'/api/role/list',columnHidden:true},
         {
           command: [
             {name:'update',text:'编辑'},

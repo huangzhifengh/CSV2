@@ -20,7 +20,7 @@ class Module extends Page {
         destroy: '/api/role/del'
       }}),
       title: '角色管理',
-      pagination: {show:true,pageSize:10},
+      pagination: {rows: 10},
       checkable: false,
       toolbar: [{name: 'create',text: '新增'}],
       columns: [

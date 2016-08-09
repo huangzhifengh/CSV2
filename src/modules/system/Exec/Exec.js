@@ -14,7 +14,7 @@ class Module extends Page {
         destroy: '/api/dervices/del'
       }}),
       title: '施工报表',
-      pagination: {show:true,pageSize:10},
+      pagination: {rows: 10},
       checkable: false,
       toolbar: [{name: 'export',text: '导出'}],
       columns: [

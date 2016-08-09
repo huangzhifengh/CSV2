@@ -16,7 +16,13 @@ class Module extends Page {
         {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
         {title:'回路',name:'circuit'},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setOnOff(data,e);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -27,6 +33,24 @@ class Module extends Page {
         <Table {...this.getConfig1()} />
       </div>
     )
+  }
+
+  _setOnOff (data,e) {
+    let api = "SetOnOffPanelOff";
+    if(!!e.target.checked){
+      api = "SetOnOffPanelOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
   }
 
 }

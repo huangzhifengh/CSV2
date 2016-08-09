@@ -78,7 +78,7 @@ class Module extends Page {
         {command:[
           {title:'开关',name:'devOnOff',type:'switch',
             click: (data,e) => {
-              this._setOnOff(data,e,dataSource);
+              this._setOnOff(data,e);
             }
           }
         ]}
@@ -97,7 +97,7 @@ class Module extends Page {
     )
   }
 
-  _setOnOff (data,e,dataSource) {
+  _setOnOff (data,e) {
     let api = "SetAdapterOff";
     if(!!e.target.checked){
       api = "SetAdapterOn";

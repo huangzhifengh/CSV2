@@ -40,7 +40,7 @@ class MenuItem extends Component {
           {!this.props.level && isMenu && data.iconCls && <span className={`glyphicon glyphicon-${data.iconCls}`}></span>}
           {this._getMenuIndent()}
           {!isMenu && hasSub && <span className='icon glyphicon glyphicon-triangle-right'></span>}
-          {this.props.checkable && <input checked={checkStatusField && (!!data[checkStatusField])} type="checkbox" className={cx({'tree-node-ckb': true, 'master-node-ckb': hasSub, 'sub-node-ckb': this.props.level})} data-id={data.id} onClick={this.props.onCKBClick} />}
+          {this.props.checkable && <input defaultChecked={checkStatusField && (!!data[checkStatusField])} type="checkbox" className={cx({'tree-node-ckb': true, 'master-node-ckb': hasSub, 'sub-node-ckb': this.props.level})} data-id={data.id} onClick={this.props.onCKBClick} />}
           <span className='menu-text' onClick={this._onSelected.bind(this)}>{data[this.props.textField || 'text']}</span>
           {isMenu && hasSub && <span className="icon glyphicon glyphicon-menu-right pull-right"></span>}
         </a>

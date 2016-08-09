@@ -17,7 +17,13 @@ class Module extends Page {
         {title:'当前色温',name:'currentColor',parse:(value,data)=>{return data.deviceStatu.currentColor}},
         {title:'当前亮度',name:'currentLightness',parse:(value,data)=>{return data.deviceStatu.currentLightness}},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setLightOnOff(data,e);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -33,7 +39,13 @@ class Module extends Page {
         {title:'区域',name:'location',parse:(value,data)=>{let show='';if(data.location1){show=data.location1;if(data.location2){show+=' '+data.location2;if(data.location3){show+=' '+data.location3}}}return show}},
         {title:'回路',name:'circuit'},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setPanelOnOff(data,e);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -52,7 +64,13 @@ class Module extends Page {
         {title:'当前风速',name:'currentW',parse:(value,data)=>{return data.deviceStatu.currentW}},
         {title:'开机时间',name:''},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              
+            }
+          }
+        ]}
       ]
     }
   }
@@ -72,7 +90,13 @@ class Module extends Page {
         {title:'当前电流(A)',name:'',parse:(value,data)=>{let show='0';if(data.deviceStatu){show=data.deviceStatu.devI}return show}},
         {title:'漏电告警',name:'',parse:(value,data)=>{let show='正常';if(data.deviceStatu){if(data.deviceStatu.leakage){show='漏电'}}return show}},
         {title:'上报时间',name:'',parse:(value,data)=>{let ct=data.deviceStatu.currentTime;let show=ct?ct:data.currentTime;return show}},
-        //{command:[{title:'开关',name:'onoff',type:'switch'}]}
+        {command:[
+          {title:'开关',name:'devOnOff',type:'switch',
+            click: (data,e) => {
+              this._setAdapterOnOff(data,e);
+            }
+          }
+        ]}
       ]
     }
   }
@@ -86,6 +110,60 @@ class Module extends Page {
         <Table {...this.getConfig4()} />
       </div>
     )
+  }
+
+  _setLightOnOff (data,e) {
+    let api = "SetLightOff";
+    if(!!e.target.checked){
+      api = "SetLightOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
+  }
+
+  _setPanelOnOff (data,e) {
+    let api = "SetOnOffPanelOff";
+    if(!!e.target.checked){
+      api = "SetOnOffPanelOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
+  }
+
+  _setAdapterOnOff (data,e) {
+    let api = "SetAdapterOff";
+    if(!!e.target.checked){
+      api = "SetAdapterOn";
+    }
+    ajax({
+      url: '/api/devices/oper/'+api+'?id='+data.id,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
+          alert("成功");
+        } else {
+          alert("失败:"+resp.name);
+        }
+      }
+    })
   }
 
 }

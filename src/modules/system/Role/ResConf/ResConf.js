@@ -14,40 +14,37 @@ class Module extends Page {
       <div className="container-fluid">
         <div className="panel panel-default">
           <div className="panel-heading">角色管理-资源配置</div>
-          <div id='resConfig'>
-            <TreeLikeUI data={'/api/role/resconf?id='+this.props.params.id} type='tree' checkable={true} onClick={this._onCKBClick.bind(this)} checkStatusField="checked" nolink={true} />
+          <div id='resConfig' className="panel-body">
+            <TreeLikeUI data={'/api/role/resconf?id='+this.props.params.id} type='tree' checkable={true} checkStatusField="checked" nolink={true} />
+            <button id="resConf" type="button" className="btn btn-info btn-sm" onClick={this._onSubmit.bind(this,this.props.params.id)}>提交</button>
           </div>
-          <button id="resConf" type="button" className="btn btn-default btn-sm" onClick={this._onSubmit.bind(this)}>提交</button>
         </div>
       </div>
     )
   }
 
-  _onCKBClick (data) {
-    console.log(data)
-  }
-
-  _onSubmit (type, data, callback) {
-    if('resConfig'===type){
-      let _resourcesIds = [];
-      $('#resConfig .tree-node-ckb:checked').each(function(i,e){
-        _resourcesIds.push($(e).attr('data-id'))
-      })
-      if(_resourcesIds.length>0){
-        data.json.resourcesIds=_resourcesIds.join(',')
-      }
-      return ajax({
-        url: '/api/role/edit',
-        data: data.json,
-        success: resp => {
-          if (resp && 0 === resp.code) {
-            callback(true)
-          } else {
-            callback(false)
-          }
-        }
-      })
+  _onSubmit (id) {
+    let data = {id: id};
+    let _resourcesIds = [];
+    $('#resConfig .tree-node-ckb:checked').each(function(i,e){
+      _resourcesIds.push($(e).attr('data-id'))
+    })
+    if(_resourcesIds.length>0){
+      data.resourcesIds=_resourcesIds.join(',')
     }
+
+    return ajax({
+      url: '/api/role/resconf/edit',
+      data: data,
+      success: resp => {
+        if (resp && 0 === resp.code) {
+          alert("成功");
+          window.location.href = '#role'
+        } else {
+          alert("失败："+resp.name)
+        }
+      }
+    })
   }
 
 }

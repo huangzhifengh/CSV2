@@ -16,7 +16,7 @@ class Module extends Page {
     return {
       dataSource: dataSource,
       title: '设备管理',
-      pagination: {show:true,pageSize:10},
+      pagination: {rows: 10},
       checkable: false,
       toolbar: [{name: 'create',text: '新增'}],
       columns: [

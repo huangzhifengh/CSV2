@@ -39,7 +39,7 @@ class TableRow extends Component {
         }}>
           <span ref="expandIcon" className="icon glyphicon glyphicon-triangle-right expand-toggle-icon" />
       </Cell> }
-      {checkable && <Cell><input onClick={this.toggleRowSelectd.bind(this)} className="table-row-checkbox" type="checkbox" /></Cell>}
+      {checkable && <Cell><input onClick={this.toggleRowSelectd.bind(this)} className="table-row-checkbox" type="checkbox" data-id={data.id}/></Cell>}
       {columns.map((config, index) => {
         return !config.columnHidden && 
           <Cell key={index}>{config.parse ? config.parse(data[config.name], data) : data[config.name]}</Cell>

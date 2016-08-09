@@ -148,7 +148,15 @@ class Module extends Page {
       }
     })
     formData.jobWeek = jobWeekArr.join(',')
-    //console.log(jobWeekArr,formData)
+
+    let deviceIds = [];
+    $('#jobForm .table-row-checkbox:checked').each(function(i,e){
+      deviceIds.push($(e).attr('data-id'));
+    })
+    if(deviceIds.length>0){
+      formData.deviceId = deviceIds.join(',');
+    }
+    //console.log(deviceIds,formData)
 
     ajax({
       type: 'POST',

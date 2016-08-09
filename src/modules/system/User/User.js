@@ -14,7 +14,7 @@ class Module extends Page {
         destroy: '/api/user/del'
       }}),
       title: '用户管理',
-      pagination: {show:true,pageSize:10},
+      pagination: {rows: 10},
       checkable: false,
       toolbar: [{name: 'create',text: '新增'}],
       columns: [
@@ -29,7 +29,7 @@ class Module extends Page {
           command: [
             {name:'update',text:'编辑'},
             {name:'destroy',text:'删除'},
-            {name:'resConfig',text:'位置配置',click:(data)=>{window.location.href='#user/localconf/id='+data.id}}
+            //{name:'resConfig',text:'位置配置',click:(data)=>{window.location.href='#user/localconf/id='+data.id}}
           ]
         }
       ]

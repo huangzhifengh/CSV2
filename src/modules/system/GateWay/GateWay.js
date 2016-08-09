@@ -14,7 +14,7 @@ class Module extends Page {
         destroy: '/api/gateway/del'
       }}),
       title: '网关管理',
-      pagination: {show:true,pageSize:10},
+      pagination: {rows: 10},
       checkable: false,
       toolbar: [{name: 'create',text: '新增'}],
       columns: [

@@ -94,15 +94,34 @@ class Module extends Page {
         {command:[
           {name:'ESTBurglar',text:'盗窃报警',
             click: (data) => {
-              data.jobStatu = 1;
-              this.setStatu(data,'/api/job/edit',dataSource);
+              this._setOnOff(data,'ESTBurglar');
             }
           },
-          {name:'ESTFire',text:'火警'},
-          {name:'ESTEmergency',text:'紧急事件'},
-          {name:'ESTArmed',text:'布防'},
-          {name:'ESTDisarmed',text:'撤防'},
-          {name:'ESTStop',text:'停止'}
+          {name:'ESTFire',text:'火警',
+            click: (data) => {
+              this._setOnOff(data,'ESTFire');
+            }
+          },
+          {name:'ESTEmergency',text:'紧急事件',
+            click: (data) => {
+              this._setOnOff(data,'ESTEmergency');
+            }
+          },
+          {name:'ESTArmed',text:'布防',
+            click: (data) => {
+              this._setOnOff(data,'ESTArmed');
+            }
+          },
+          {name:'ESTDisarmed',text:'撤防',
+            click: (data) => {
+              this._setOnOff(data,'ESTDisarmed');
+            }
+          },
+          {name:'ESTStop',text:'停止',
+            click: (data) => {
+              this._setOnOff(data,'ESTStop');
+            }
+          }
         ]}
       ]
     }
@@ -120,29 +139,21 @@ class Module extends Page {
     )
   }
 
-  setStatu () {
-    alert("success")
-  }
-
-  _devicesOperReq (p) {
+  _setOnOff (data,oper) {
+    let api = "SetSirenStatus";
     ajax({
-      url: '/api/devices/'+p.api+'?terminal='+p.terminal+'&mac='+p.mac+'&oper='+p.oper+'&visualStrobe=1&durSiren=5',
-      data: {},
+      url: '/api/devices/oper/'+api+'?id='+data.id+'&oper='+oper+'&visualStrobe=1&durSiren=5',
       success: resp => {
         if (resp && 0 === resp.code) {
+          //dataSource.sync(data);
           alert("成功");
         } else {
-          alert("失败"+"："+resp.name);
+          alert("失败:"+resp.name);
         }
       }
     })
   }
   
-  _onCommandClick (type, data, e) {
-    console.log(type, data, e)
-    this._devicesOperReq({api: 'SetSirenStatus',terminal: 'pc',mac: data.macAdd,oper: type})
-    return false
-  }
 }
 
 module.exports = Module

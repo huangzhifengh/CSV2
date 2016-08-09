@@ -27,6 +27,9 @@ class Module extends Page {
       ],
       toolbar: [{name: 'create',text: '新增'}],
       dataSource: dataSource,
+      pagination: {
+        rows: 10,
+      },
       detailInit: data => {
         return {
           columns: [

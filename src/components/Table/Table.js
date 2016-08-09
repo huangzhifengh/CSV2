@@ -40,6 +40,12 @@ class Table extends Component {
     if (this.props.autoRead !== false) this.read()
   }
 
+  onPaginationClick (index) {
+    this.read(_.extend(this.props.pagination, {
+      page: index
+    }))
+  }
+
   render () {
     let { title, columns, pagination, toolbar = [], checkable, detailInit } = this.props
     columns = $.extend(true, [], columns)
@@ -61,7 +67,7 @@ class Table extends Component {
         <Header {...props} />
         <Body {...props} data={this.state.data} />
       </table>
-      <Pagination {...pagination} dataSource={this.dataSource} />
+      <Pagination {...pagination} total={this.state.data.length} onClick={::this.onPaginationClick} />
       <div ref="dataModalContainer"></div>
     </div>
   }
@@ -70,8 +76,8 @@ class Table extends Component {
     resp && this.setState({data: resp.data})
   }
 
-  read () {
-    this.dataSource.read(::this.refresh)
+  read (data) {
+    this.dataSource.read(data, ::this.refresh)
   }
 
   onCommandClick (command, data, e) {

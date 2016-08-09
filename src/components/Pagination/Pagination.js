@@ -4,13 +4,13 @@ class Pagination extends Component {
   
   static propTypes = {
     total: React.PropTypes.number,
-    size: React.PropTypes.number,
-    onPaginationClick: React.PropTypes.func
+    rows: React.PropTypes.number,
+    onClick: React.PropTypes.func
   }
 
   static defaultProps = {
     total: 0,
-    size: 0
+    rows: 0
   }
 
   shouldComponentUpdate (nextProps, nextSates) {
@@ -18,30 +18,30 @@ class Pagination extends Component {
   }
 
   render() {
+    let { page = 1, rows, total, onClick } = this.props
     
-    if (!this.props.size) return <span />
+    if (!rows) return <span />
 
-    let currentPage = this.props.page
-    let page = Math.ceil(this.props.total / this.props.size)
+    let pageCount = Math.ceil(total / rows)
     let lis = []
 
-    for(var i = 0; i < page; i++) {
+    for(var i = 0; i < pageCount; i++) {
       lis.push(<li key={i} className={cx({
-        active: currentPage === (i + 1)
-      })} data-page={i + 1} onClick={this.props.onClick.bind(this, i + 1)}><a href="javascript: void 0;">{i + 1}</a></li>)
+        active: page === (i + 1)
+      })} data-page={i + 1} onClick={onClick.bind(this, i + 1)}><a href="javascript: void 0;">{i + 1}</a></li>)
     }
 
     return (
       <nav className="pull-right">
         <ul className="pagination pagination-sm">
-          <li className={cx({disabled: currentPage === 1})}>
-            <a href="javascript: void 0;" onClick={this.props.onClick.bind(this, currentPage - 1)}>
+          <li className={cx({disabled: page === 1})}>
+            <a href="javascript: void 0;" onClick={onClick.bind(this, page - 1)}>
               <span>&laquo;</span>
             </a>
           </li>
           {lis}
-          <li className={cx({disabled: page === currentPage})}>
-            <a href="javascript: void 0;" onClick={this.props.onClick.bind(this, currentPage === page ? false : (currentPage + 1))}>
+          <li className={cx({disabled: pageCount === page})}>
+            <a href="javascript: void 0;" onClick={onClick.bind(this, page === pageCount ? false : (page + 1))}>
               <span>&raquo;</span>
             </a>
           </li>

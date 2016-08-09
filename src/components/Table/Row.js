@@ -22,6 +22,12 @@ class TableRow extends Component {
     onClick: () => {},
   }
 
+  toggleRowSelectd (e) {
+    let $table = $(e.target).closest('.table')
+    let allSelected = $table.find('.table-row-checkbox').filter(':not(:checked)').length === 0
+    $table.find('.table-header-checkbox').prop('checked', allSelected)
+  }
+
   render() {
     let { data, columns, command, hasDetail, checkable, onClick, toggleSubrow, ...other } = this.props
     
@@ -33,7 +39,7 @@ class TableRow extends Component {
         }}>
           <span ref="expandIcon" className="icon glyphicon glyphicon-triangle-right expand-toggle-icon" />
       </Cell> }
-      {checkable && <Cell><input type="checkbox" /></Cell>}
+      {checkable && <Cell><input onClick={this.toggleRowSelectd.bind(this)} className="table-row-checkbox" type="checkbox" /></Cell>}
       {columns.map((config, index) => {
         return !config.columnHidden && 
           <Cell key={index}>{config.parse ? config.parse(data[config.name], data) : data[config.name]}</Cell>

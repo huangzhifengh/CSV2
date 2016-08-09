@@ -13,7 +13,7 @@ export default {
   proxy: {
     port: PROXY_SERVER_PROT,
     protocal: 'http',
-    target: '127.0.0.1',//115.236.175.217
+    target: '115.236.175.217',//115.236.175.217
     targetPort: 1919,
     prefix: '/lsiot',
     pattern: '**/api/**',

@@ -15,12 +15,16 @@ class Module extends Page {
         <div className="panel panel-default">
           <div className="panel-heading">角色管理-资源配置</div>
           <div id='resConfig'>
-            <TreeLikeUI data={'/api/role/resconf?id='+this.props.params.id} type='tree' checkable={true} checkStatusField="checked" nolink={true} />
+            <TreeLikeUI data={'/api/role/resconf?id='+this.props.params.id} type='tree' checkable={true} onClick={this._onCKBClick.bind(this)} checkStatusField="checked" nolink={true} />
           </div>
           <button id="resConf" type="button" className="btn btn-default btn-sm" onClick={this._onSubmit.bind(this)}>提交</button>
         </div>
       </div>
     )
+  }
+
+  _onCKBClick (data) {
+    console.log(data)
   }
 
   _onSubmit (type, data, callback) {

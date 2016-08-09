@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from 'base-page';
 import Table from 'components/Table';
-import DataSource from 'components/DataSource';
+import DataSource from 'components/DataSourceWithSocket';
 
 class Module extends Page {
 

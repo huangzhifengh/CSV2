@@ -98,9 +98,9 @@ class Module extends Page {
   }
 
   _setOnOff (data,e,dataSource) {
-    let api = "SetLightOff";
+    let api = "SetAdapterOff";
     if(!!e.target.checked){
-      api = "SetLightOn";
+      api = "SetAdapterOn";
     }
     ajax({
       url: '/api/devices/oper/'+api+'?id='+data.id,
